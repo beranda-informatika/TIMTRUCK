@@ -218,7 +218,12 @@ class GroupquotationController extends Controller
         $kdcustomer = $request->id;
         $quotation =MQuotation::with('gettypetruck')->where('groupquotationid',$request->id)
         ->where('f_accquotation','1')->orderby('destination')->get();
-        return view('groupquotation.getroute', compact('quotation', 'kdcustomer'));
+        $aksi=$request->aksi;
+        if($aksi=="ubah")
+            $shipmentid=$request->shipmentid;
+        else
+            $shipmentid="";
+        return view('groupquotation.getroute', compact('quotation', 'kdcustomer','aksi','shipmentid'));
 
     }
     public function setroute(Request $request)
