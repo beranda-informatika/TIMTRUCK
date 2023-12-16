@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2023 at 02:10 PM
+-- Generation Time: Dec 16, 2023 at 02:30 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -20,22 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `truck`
 --
-
-DELIMITER $$
---
--- Procedures
---
-DROP PROCEDURE IF EXISTS `updfeequotation`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updfeequotation` (IN `xquotationid` VARCHAR(20), IN `xrateid` VARCHAR(20), IN `xnominal` DOUBLE)   update detailratequotation
-set nominal=xnominal, jumlah=xnominal
-where quotationid=xquotationid and rateid=xrateid$$
-
-DROP PROCEDURE IF EXISTS `updfeeshipment`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `updfeeshipment` (IN `xshipmentid` VARCHAR(20), IN `xrateid` VARCHAR(20), IN `xnominal` FLOAT UNSIGNED)   update detailrateshipment
-set nominal=xnominal, jumlah=xnominal
-where shipmentid=xshipmentid and rateid=xrateid$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -155,22 +139,6 @@ CREATE TABLE IF NOT EXISTS `detailinvoice` (
   KEY `noinvoice` (`noinvoice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Triggers `detailinvoice`
---
-DROP TRIGGER IF EXISTS `tbatalinvoice`;
-DELIMITER $$
-CREATE TRIGGER `tbatalinvoice` AFTER DELETE ON `detailinvoice` FOR EACH ROW update detailrateshipment set f_invoice="0" 
-where id=OLD.iddetailrateshipment
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `tinvoice`;
-DELIMITER $$
-CREATE TRIGGER `tinvoice` AFTER INSERT ON `detailinvoice` FOR EACH ROW update detailrateshipment set f_invoice="1" 
-where id=NEW.iddetailrateshipment
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -184,22 +152,6 @@ CREATE TABLE IF NOT EXISTS `detailpreinvoice` (
   `piid` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Triggers `detailpreinvoice`
---
-DROP TRIGGER IF EXISTS `inpreinvoice`;
-DELIMITER $$
-CREATE TRIGGER `inpreinvoice` AFTER INSERT ON `detailpreinvoice` FOR EACH ROW update shipment set f_pi="1" 
-where shipmentid=NEW.shipmentid
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `outopreinvoice`;
-DELIMITER $$
-CREATE TRIGGER `outopreinvoice` AFTER DELETE ON `detailpreinvoice` FOR EACH ROW update shipment set f_pi="0" 
-where shipmentid=OLD.shipmentid
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -25361,19 +25313,6 @@ CREATE TABLE IF NOT EXISTS `detailrateshipment` (
   KEY `noujo` (`noujo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Triggers `detailrateshipment`
---
-DROP TRIGGER IF EXISTS `fee`;
-DELIMITER $$
-CREATE TRIGGER `fee` AFTER UPDATE ON `detailrateshipment` FOR EACH ROW IF (NEW.rateid='10011')
-THEN
-insert into tempdetailrate (shipmentid,rateid,nominal)
-values (NEW.shipmentid,NEW.rateid,NEW.nominal);
-END IF
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -25689,16 +25628,6 @@ INSERT INTO `payment` (`id`, `noinvoice`, `shipmentid`, `datepayment`, `jumlah`,
 (16, 'RPY00000000000000006', 'SHP00000000000000005', '2023-11-22', 500000, 'BCA', 'bejo ok ssss', '112233'),
 (17, 'RPY00000000000000008', 'SHP00000000000000006', '2023-12-16', 100000, 'BCA', 'bejo ok ssss', '112233');
 
---
--- Triggers `payment`
---
-DROP TRIGGER IF EXISTS `tpayment`;
-DELIMITER $$
-CREATE TRIGGER `tpayment` AFTER INSERT ON `payment` FOR EACH ROW update shipment set f_status="Payout" 
-where shipmentid=NEW.shipmentid and shipment.f_status="New"
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -25923,7 +25852,7 @@ INSERT INTO `quotations` (`id`, `groupquotationid`, `tglrequest`, `tglaccso`, `o
 ('QTT-11-2023-0000004', 'QF.0002.ALN.11.2023', '2023-11-19', NULL, 'BANDUNG', 'JAKARTA', 'PANDORA', 'BM52', 'load', 10000, 190, 385000, 'new', '1', '0', '0'),
 ('QTT-11-2023-0000005', 'QF.0003.ALN.11.2023', '2023-11-20', NULL, 'GRESIK', 'JAKARTA', 'PANDORA', 'BM48', 'load', 10000, 300, 166000, 'new', '1', '0', '0'),
 ('QTT-11-2023-0000006', 'QF.0003.ALN.11.2023', '2023-11-20', NULL, 'BANDUNG', 'BOGOR', 'PANDORA', 'BM52', 'load', 10000, 250, 190000, 'new', '1', '0', '0'),
-('QTT-11-2023-0000008', 'QF.0001.ALN.11.2023', '2023-11-20', NULL, 'GRESIK', 'JAKARTA', 'PANDORA', 'BM52', 'load', 10000, 300, 105000, 'new', '1', '0', '0'),
+('QTT-11-2023-0000008', 'QF.0001.ALN.11.2023', '2023-11-20', NULL, 'GRESIK', 'JAKARTA', 'PANDORA', 'BM52', 'load', 10000, 300, 105000, 'Approve', '1', '0', '0'),
 ('QTT-11-2023-0000009', 'QF.0001.ALN.11.2023', '2023-11-20', NULL, 'BANDUNG', 'BOGOR', 'PANDORA', 'BM52(PUJ)', 'load', 10000, 400, 500000, 'new', '1', '0', '0'),
 ('QTT-11-2023-0000010', 'QF.0003.ALN.11.2023', '2023-11-22', NULL, 'BANDUNG', 'JAKARTA', 'LinFox', 'BM48(PUJ)', 'load', 10000, 255, 1880000, 'new', '1', '0', '0'),
 ('QTT-12-2023-0000011', 'QF.0001.ALN.11.2023', '2023-12-16', NULL, 'SURABAYA', 'JAKARTA', 'PANDORA', 'Fus10T', 'load', 12222, 4200000, 600000, 'new', '1', '0', '0');
@@ -29050,20 +28979,11 @@ CREATE TABLE IF NOT EXISTS `shipment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Triggers `shipment`
+-- Dumping data for table `shipment`
 --
-DROP TRIGGER IF EXISTS `batalquotation`;
-DELIMITER $$
-CREATE TRIGGER `batalquotation` AFTER DELETE ON `shipment` FOR EACH ROW update quotations set quotations.f_status="new" 
-where id=OLD.quotationid
-$$
-DELIMITER ;
-DROP TRIGGER IF EXISTS `quotation`;
-DELIMITER $$
-CREATE TRIGGER `quotation` AFTER INSERT ON `shipment` FOR EACH ROW update quotations set quotations.f_status="Approve" 
-where id=NEW.quotationid
-$$
-DELIMITER ;
+
+INSERT INTO `shipment` (`shipmentid`, `groupquotationid`, `quotationid`, `kdkategori`, `origin`, `destination`, `kdcustomer`, `kdsales`, `description`, `multidrop`, `qtydrop`, `ratedrop`, `locationdrop`, `multipickup`, `qtypickup`, `ratepickup`, `locationpickup`, `mrc`, `unitmrc`, `ujo`, `kdproject`, `typeroute`, `kdunit`, `kddriver`, `typetruckid`, `tglorder`, `tglloading`, `tglshipment`, `tglarrival`, `tglpayment`, `f_status`, `f_operational`, `f_pi`) VALUES
+('SHP00000000000000001', 'QF.0001.ALN.11.2023', 'QTT-11-2023-0000008', 'ALN', 'GRESIK', 'JAKARTA', 'PANDORA', 'S0002', '-', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 300, 300, 105000, 'BEC', 'load', 'ALN001', 'D0001', 'BM52', '2023-12-16', NULL, NULL, NULL, NULL, 'New', '1', '0');
 
 -- --------------------------------------------------------
 
