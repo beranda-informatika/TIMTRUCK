@@ -119,12 +119,8 @@ class ShipmentController extends Controller
     }
     public function formoperational(Request $request)
     {
-        $shipment = MShipment::with([
-            'getdetailshipment' => function ($query) {
-                $query->orderBy('rateid', 'asc');
-            },
-            'gettypetruck',
-        ])
+        $shipment = MShipment::with(
+            'gettypetruck')
             ->where('shipmentid', $request->id)
             ->first();
         return view('shipment.formoperational', compact('shipment'));
@@ -212,29 +208,29 @@ class ShipmentController extends Controller
             }
             $shipmentid = $shipment->shipmentid;
 
-            $dataratequotation = MDetailratequotation::where('quotationid', '=', $request->routeid)->get();
-            $jml = count($dataratequotation);
+            // $dataratequotation = MDetailratequotation::where('quotationid', '=', $request->routeid)->get();
+            // $jml = count($dataratequotation);
 
-            foreach ($dataratequotation as $itemrate) {
-                if ($itemrate->rateid == '10011' && $request->typeroute == 'load') {
-                    $f_edit = 1;
-                } elseif ($itemrate->rateid == '50027') {
-                    $f_edit = 1;
-                } else {
-                    $f_edit = 0;
-                }
-                MDetailshipment::create([
-                    'shipmentid' => $shipmentid,
-                    'rateid' => $itemrate->rateid,
-                    'descript' => $itemrate->descript,
-                    'nominal' => $itemrate->nominal,
-                    'qty' => $itemrate->qty,
-                    'jumlah' => $itemrate->jumlah,
-                    'pph' => $itemrate->pph,
-                    'pajak' => $itemrate->pajak,
-                    'f_edit' => $f_edit,
-                ]);
-            }
+            // foreach ($dataratequotation as $itemrate) {
+            //     if ($itemrate->rateid == '10011' && $request->typeroute == 'load') {
+            //         $f_edit = 1;
+            //     } elseif ($itemrate->rateid == '50027') {
+            //         $f_edit = 1;
+            //     } else {
+            //         $f_edit = 0;
+            //     }
+            //     MDetailshipment::create([
+            //         'shipmentid' => $shipmentid,
+            //         'rateid' => $itemrate->rateid,
+            //         'descript' => $itemrate->descript,
+            //         'nominal' => $itemrate->nominal,
+            //         'qty' => $itemrate->qty,
+            //         'jumlah' => $itemrate->jumlah,
+            //         'pph' => $itemrate->pph,
+            //         'pajak' => $itemrate->pajak,
+            //         'f_edit' => $f_edit,
+            //     ]);
+            // }
             Alert::success('sukses');
             return Redirect()
                 ->route('shipment.index')

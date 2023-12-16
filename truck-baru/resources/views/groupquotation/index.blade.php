@@ -76,10 +76,10 @@
 
                                             @if (Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2')
                                                 @if ($key->f_accquotation == 0)
-                                                    <div class="accqts btn btn-sm btn-pink">Acc Quotation</div>
+                                                    <div class="accqts btn btn-sm btn-pink">Acc to Cust</div>
                                                 @endif
                                                 @if ($key->f_accquotation == 1 && $key->f_accso == 0)
-                                                    <div class="accso btn btn-sm btn-success">Acc SO</div>
+                                                    <div class="accso btn btn-sm btn-success">Appr Quo</div>
                                                 @endif
                                             @endif
 

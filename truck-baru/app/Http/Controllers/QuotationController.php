@@ -80,7 +80,11 @@ class QuotationController extends Controller
         $quotation->kdcustomer = $request->kdcustomer;
         $quotation->typetruckid = $request->typetruckid;
         $quotation->typeroute = $request->typeroute;
-        $quotation->minqty = $request->minqty;
+        if ($request->typeroute == 'load') {
+            $quotation->minqty = $request->minqty;
+        } else {
+            $quotation->minqty = '0';
+        }
         $quotation->mrc = $request->mrc;
 
         $simpan = $quotation->save();
@@ -116,8 +120,8 @@ class QuotationController extends Controller
         $detailratequotation->pajak='0';
         $detailratequotation->save();
 
-        $fee=$request->mrc*0.05;
-        DB::select('call  updfeequotation(?,?,?)',array($quotation->id,'50011',$fee));
+        // $fee=$request->mrc*0.05;
+        // DB::select('call  updfeequotation(?,?,?)',array($quotation->id,'50011',$fee));
 
 
         if ($simpan) {
@@ -166,7 +170,7 @@ class QuotationController extends Controller
         $dataratequotation->jumlah=$request->mrc;
         $dataratequotation->save();
         $fee=$request->mrc*0.05;
-        DB::select('call  updfeequotation(?,?,?)',array($quotation->id,'50011',$fee));
+        // DB::select('call  updfeequotation(?,?,?)',array($quotation->id,'50011',$fee));
 
         if ($simpan) {
             Alert::success('Berhasil');
@@ -389,7 +393,7 @@ class QuotationController extends Controller
 
             }
 
-             DB::select('call  updfeequotation(?,?,?)',array($quotation->id,'50031',$pajak));
+            //  DB::select('call  updfeequotation(?,?,?)',array($quotation->id,'50031',$pajak));
 
             // DB::commit();
 
