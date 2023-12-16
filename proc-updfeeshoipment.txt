@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updfeeshipment`(IN `xshipmentid` VARCHAR(20), IN `xrateid` VARCHAR(20), IN `xnominal` FLOAT UNSIGNED)
+update detailrateshipment
+set nominal=xnominal, jumlah=xnominal
+where shipmentid=xshipmentid and rateid=xrateid$$
+DELIMITER ;
