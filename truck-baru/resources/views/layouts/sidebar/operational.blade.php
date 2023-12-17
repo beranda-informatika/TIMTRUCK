@@ -49,13 +49,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('ujo.index') }}">
-                               UJO Ongoing
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('settlement.index') }}">
-                                UJO Settlement
+                            <a href="{{ route('ujo.listujo') }}">
+                               UJO
                             </a>
                         </li>
 

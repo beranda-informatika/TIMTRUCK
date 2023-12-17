@@ -4,17 +4,12 @@
     <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <!-- Responsive Table css -->
-    <link href="{{ asset('assets/libs/admin-resources/rwd-table/rwd-table.min.css') }}" rel="stylesheet" type="text/css" />
-    <!-- Responsive Table js -->
+
 
 @endsection
-@section('script')
-    <!-- Responsive Table js -->
-    <script src="{{ asset('assets/libs/admin-resources/rwd-table/rwd-table.min.js') }}"></script>
 
-@endsection
 @section('content')
-@section('title', 'Shipments Quotation')
+@section('title', 'UJO')
 <div id="myModal" class="modal fade" id="scrollable-modal" tabindex="-1" role="dialog"
     aria-labelledby="scrollableModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -41,7 +36,7 @@
         <div class="card">
 
             <div class="card-body">
-                <a href="{{ route('shipment.index') }}" class="btn btn-primary mb-3">Refresh </a>
+                <a href="{{ route('ujo.listujo') }}" class="btn btn-primary mb-3">Refresh </a>
                 <div class="responsive-table-plugin">
                     <div class="table-rep-plugin ">
                         <div class="table-responsive" data-pattern="priority-columns">
@@ -50,57 +45,40 @@
                                 <thead>
                                     <tr>
 
-                                        <th scope="col">No.ID</th>
-                                        <th scope="col">Route</th>
-                                        <th scope="col">Project</th>
-                                        <th scope="col">Customer</th>
-                                        <th scope="col">Sales</th>
-                                        <th scope="col">Driver</th>
-                                        <th scope="col">Unit</th>
-                                        <th scope="col">Detail</th>
-                                        <th scope="col">Tgl.Quotation</th>
-                                        <th scope="col">Status</th>
-
+                                        <th scope="col">No.UJO</th>
+                                        <th scope="col">No. SO</th>
+                                        <th scope="col">Date Ujo</th>
+                                        <th scope="col">Nominal UJO</th>
+                                        <th scope="col">Paid off</th>
+                                        <th scope="col">Status UJO</th>
                                         <th scope="col">Action</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php $i=1; @endphp
-                                    @foreach ($shipment as $key)
+                                    @foreach ($ujo as $key)
                                         <tr>
-                                            <td scope="col">{{ $key->shipmentid }}</td>
-                                            <td scope="col">{{ $key->origin }} - {{ $key->destination }}</td>
-                                            <td scope="col">{{ $key->getproject->namaproject }}</td>
-                                            <td scope="col">{{ $key->getcustomer->namacustomer }}</td>
-                                            <td scope="col">{{ $key->getsales->namasales }}</td>
-                                            <td scope="col">{{ $key->getdriver->namadriver }}</td>
-                                            <td scope="col">{{ $key->getunit->plat }}</td>
+                                            <td scope="col">{{ $key->noujo }}</td>
+                                            <td scope="col"><a href="{{ route('shipment.detail',$key->shipmentid)}}" >{{ $key->shipmentid }}</a></td>
+                                            <td scope="col">{{ $key->tglujo }}</td>
+                                            <td scope="col">{{ $key->nominalujo }}</td>
+                                            <td scope="col">{{ $key->terbayar }}</td>
+                                            <td scope="col">{{ $key->statusujo }}</td>
                                             <td scope="col">
-
-                                                <button type="button" class="btn btn-action"
-                                                    data-bs-target="#scrollable-modal"
-                                                    data-url="{{ URL::to('/shipment/detail/' . $key->shipmentid) }}"><i
-                                                        class="fa fa-search-plus" aria-hidden="true"></i></button>
-                                            </td>
-                                            <td scope="col">{{ $key->tglquotation }}</td>
-                                            <td scope="col">
-                                                @include('statusshipment.statusshipment')
-
-                                            </td>
-
-
-                                            <td scope="col">
-
-
-                                                <form action="{{ route('shipment.destroy', $key->shipmentid) }}"
+                                                <form action="{{ route('ujo.destroy', $key->noujo) }}"
                                                     method="POST">
-                                                    <a href="{{ route('shipment.edit', $key->shipmentid) }}"
-                                                        class="btn btn-sm btn-warning">Edit</a>
+                                                    <a href="{{ route('payout.listinvoice', $key->noujo) }}"
+                                                        class="btn btn-sm btn-warning">LIST REQUEST</a>
+                                                    @if($key->f_lunas == 0)
+
+                                                    <a href="{{ route('payout.forminvoice', $key->noujo) }}"
+                                                        class="btn btn-sm btn-pink">REQUEST PAYMENT</a>
+                                                    @endif
 
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Hapus Data ini?');"
+                                                    <button type="submit" onclick="return confirm('Delete this data?');"
                                                         class="btn btn-sm btn-danger">Del</button>
                                                 </form>
                                             </td>

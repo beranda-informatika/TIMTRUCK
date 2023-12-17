@@ -73,12 +73,14 @@
                                             {{ number_format($key->ujo) }}
                                         @endif
                                     </td>
-                                    <td>@if ($key->multidrop==1)
-                                        {{  $key->qtydrop }} point
+                                    <td>
+                                        @if ($key->multidrop == 1)
+                                            {{ $key->qtydrop }} point
                                         @endif
                                     </td>
-                                    <td>@if ($key->multipickup==1)
-                                        {{  $key->qtypickup }} point
+                                    <td>
+                                        @if ($key->multipickup == 1)
+                                            {{ $key->qtypickup }} point
                                         @endif
                                     </td>
                                     <td scope="col">{{ $key->description }}</td>
@@ -119,15 +121,14 @@
                                         @endif
 
                                         @if (Auth::user()->roles_id == 3 && $key->f_status == 'New' && $key->f_operational == 0)
-
-                                        <form action="{{ route('shipment.destroy', $key->shipmentid) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                                class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
-                                    @endif
+                                            <form action="{{ route('shipment.destroy', $key->shipmentid) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Hapus Data ini?');"
+                                                    class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        @endif
                                     </td>
 
                                 </tr>

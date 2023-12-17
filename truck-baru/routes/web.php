@@ -57,7 +57,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\UnitController::class, 'show'])->name('unit.show');
             Route::get('/getunit', [App\Http\Controllers\UnitController::class, 'getunit'])->name('unit.getunit');
         });
-       
+
         Route::group(['prefix' => 'driver'], function () {
             Route::get('/', [App\Http\Controllers\DriverController::class, 'index'])->name('driver.index');
             Route::get('/create', [App\Http\Controllers\DriverController::class, 'create'])->name('driver.create');
@@ -202,6 +202,13 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/ujo', [App\Http\Controllers\ShipmentController::class, 'ujo'])->name('shipment.ujo');
             Route::get('/inujo/{id}', [App\Http\Controllers\ShipmentController::class, 'inujo'])->name('shipment.inujo');
             Route::post('/storeujo', [App\Http\Controllers\ShipmentController::class, 'storeujo'])->name('shipment.storeujo');
+            Route::get('/inloadkgmrc/{id}', [App\Http\Controllers\ShipmentController::class, 'inloadkgmrc'])->name('shipment.inloadkgmrc');
+            Route::post('/storeloadkgmrc', [App\Http\Controllers\ShipmentController::class, 'storeloadkgmrc'])->name('shipment.storeloadkgmrc');
+            Route::get('/indrop/{id}', [App\Http\Controllers\ShipmentController::class, 'indrop'])->name('shipment.indrop');
+            Route::post('/storedrop', [App\Http\Controllers\ShipmentController::class, 'storedrop'])->name('shipment.storedrop');
+            Route::get('/inpickup/{id}', [App\Http\Controllers\ShipmentController::class, 'inpickup'])->name('shipment.inpickup');
+            Route::post('/storepickup', [App\Http\Controllers\ShipmentController::class, 'storepickup'])->name('shipment.storepickup');
+
             Route::get('/inrevenue/{id}', [App\Http\Controllers\ShipmentController::class, 'inrevenue'])->name('shipment.inrevenue');
             Route::post('/storerevenue', [App\Http\Controllers\ShipmentController::class, 'storerevenue'])->name('shipment.storerevenue');
             Route::get('/getsalesorder', [App\Http\Controllers\ShipmentController::class, 'getsalesorder'])->name('shipment.getsalesorder');
@@ -233,6 +240,8 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/formujo', [App\Http\Controllers\UjoController::class, 'formujo'])->name('ujo.formujo');
             Route::get('/inrate/{id}', [App\Http\Controllers\UjoController::class, 'inrate'])->name('ujo.inrate');
             Route::post('/ratestore', [App\Http\Controllers\UjoController::class, 'ratestore'])->name('ujo.ratestore');
+            Route::get('/listujo', [App\Http\Controllers\UjoController::class, 'listujo'])->name('ujo.listujo');
+
         });
         Route::group(['prefix' => 'settlement'], function () {
             Route::get('/', [App\Http\Controllers\SettlementController::class, 'index'])->name('settlement.index');
@@ -336,7 +345,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         Route::group(['prefix' => 'payment', 'roles'=>['finance']], function () {
             Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('payment.index');
             Route::get('/invoice/{id}', [App\Http\Controllers\PaymentController::class, 'invoice'])->name('payment.invoice');
-            Route::post('/formpay', [App\Http\Controllers\PaymentController::class, 'formpay'])->name('payment.formpay');
+            Route::get('/formpay', [App\Http\Controllers\PaymentController::class, 'formpay'])->name('payment.formpay');
             Route::post('/store', [App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
             Route::get('/historyujo', [App\Http\Controllers\PaymentController::class, 'historyujo'])->name('payment.historyujo');
             Route::get('/history', [App\Http\Controllers\PaymentController::class, 'history'])->name('payment.history');

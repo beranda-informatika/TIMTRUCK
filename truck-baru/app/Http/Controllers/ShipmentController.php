@@ -15,6 +15,10 @@ use App\Models\MUnit;
 use App\Models\MDriver;
 use App\Models\MDocpod;
 use App\Models\MLocationpoint;
+use App\Models\MDetailujoongoing;
+use App\Models\MDetailrevenue;
+use App\Models\MUjo;
+
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -119,8 +123,7 @@ class ShipmentController extends Controller
     }
     public function formoperational(Request $request)
     {
-        $shipment = MShipment::with(
-            'gettypetruck')
+        $shipment = MShipment::with('gettypetruck')
             ->where('shipmentid', $request->id)
             ->first();
         return view('shipment.formoperational', compact('shipment'));
@@ -186,24 +189,22 @@ class ShipmentController extends Controller
             $shipment->ujo = $request->ujo;
             $simpan = $shipment->save();
 
-            if (count($request->locationdrop)>1) {
+            if (count($request->locationdrop) > 1) {
                 foreach ($request->locationdrop as $key => $value) {
                     MLocationpoint::create([
                         'shipmentid' => $shipment->shipmentid,
                         'location' => $value,
                         'typelocation' => 'drop',
                     ]);
-
                 }
             }
-            if (count($request->locationpickup)>1) {
+            if (count($request->locationpickup) > 1) {
                 foreach ($request->locationdrop as $key => $value) {
                     MLocationpoint::create([
                         'shipmentid' => $shipment->shipmentid,
                         'location' => $value,
                         'typelocation' => 'pickup',
                     ]);
-
                 }
             }
             $shipmentid = $shipment->shipmentid;
@@ -296,14 +297,21 @@ class ShipmentController extends Controller
                 $shipment->origin = $request->origin;
                 $shipment->destination = $request->destination;
                 $shipment->typeroute = $request->typeroute;
+
                 $shipment->mrc = $request->mrc;
                 $shipment->ujo = $request->ujo;
-
+                if ($request->typeroute == 'load') {
+                    $shipment->unitmrc = $request->mrc;
+                }
                 $shipment->save();
+
+                $ujo = MUjo::where('shipmentid', $id)->first();
+                $ujo->nominalujo = $request->ujo;
+                $ujo->save();
+                $noujo = $ujo->noujo;
                 //hapus rate
-                MDetailshipment::where('shipmentid', '=', $id)
-                    ->where('rateid', '!=', '50027')
-                    ->delete();
+                MDetailujoongoing::where('noujo', '=', $noujo)->delete();
+
                 $dataratequotation = MDetailratequotation::where('quotationid', '=', $request->routeid)->get();
                 $jml = count($dataratequotation);
 
@@ -318,8 +326,8 @@ class ShipmentController extends Controller
                     if ($itemrate->rateid == '50027') {
                         //skip
                     } else {
-                        MDetailshipment::create([
-                            'shipmentid' => $id,
+                        MDetailujoongoing::create([
+                            'noujo' => $noujo,
                             'rateid' => $itemrate->rateid,
                             'descript' => $itemrate->descript,
                             'nominal' => $itemrate->nominal,
@@ -474,9 +482,21 @@ class ShipmentController extends Controller
             ->first();
         return view('shipment.inujo', compact('shipment', 'detailrate', 'jmlitem'));
     }
+    public function inloadkgmrc($id)
+    {
+        $detailrate = MDetailrevenue::join('rate', 'detailrevenue.rateid', '=', 'rate.rateid')
+            ->where('shipmentid', $id)
+            ->where('rate.kdakun', '1001')
+            ->get();
+        $jmlitem = $detailrate->count();
+        $shipment = MShipment::with('getcustomer', 'getsales', 'getkategori')
+            ->where('shipmentid', $id)
+            ->first();
+        return view('shipment.inloadkgmrc', compact('shipment', 'detailrate', 'jmlitem'));
+    }
     public function inrevenue($id)
     {
-        $detailrate = MDetailshipment::join('rate', 'detailrateshipment.rateid', '=', 'rate.rateid')
+        $detailrate = MDetailrevenue::join('rate', 'detailrevenue.rateid', '=', 'rate.rateid')
             ->where('shipmentid', $id)
             ->where('rate.kdakun', '1001')
             ->get();
@@ -486,6 +506,108 @@ class ShipmentController extends Controller
             ->first();
         return view('shipment.inrevenue', compact('shipment', 'detailrate', 'jmlitem'));
     }
+    public function storeloadkgmrc(Request $request)
+    {
+        $shipment = MShipment::find(request('shipmentid'));
+        $shipment->mrc = request('mrc');
+        $shipment->save();
+        $revenue = MDetailrevenue::where('rateid', '10011')->count();
+        if ($revenue>0) {
+            $detailrate = MDetailrevenue::where('rateid', '10011')->first();
+            $detailrate->nominal = request('mrc');
+            $detailrate->jumlah = request('mrc');
+            $detailrate->save();
+        } else {
+            $detailrate = MDetailrevenue::create([
+                'shipmentid' => request('shipmentid'),
+                'rateid' => '10011',
+                'descript' => 'MRC',
+                'nominal' => request('mrc'),
+                'qty' => request('qty'),
+                'jumlah' => request('mrc'),
+                'pph' => '0',
+                'pajak' => '0',
+                'f_edit' => '1',
+            ]);
+        }
+        return redirect()->route('shipment.detail', $request->shipmentid);
+
+    }
+    public function indrop($id)
+    {
+        $detailrate = MDetailrevenue::join('rate', 'detailrevenue.rateid', '=', 'rate.rateid')
+            ->where('shipmentid', $id)
+            ->where('rate.kdakun', '1001')
+            ->get();
+        $jmlitem = $detailrate->count();
+        $shipment = MShipment::with('getcustomer', 'getsales', 'getkategori')
+            ->where('shipmentid', $id)
+            ->first();
+        return view('shipment.indrop', compact('shipment', 'detailrate', 'jmlitem'));
+    }
+    public function storedrop(Request $request)
+    {
+        $revenue = MDetailrevenue::where('rateid', '10012')->count();
+        if ($revenue>0) {
+            $detailrate = MDetailrevenue::where('rateid', '10012')->first();
+            $detailrate->nominal = request('nominal');
+            $detailrate->qty = request('qty');
+            $detailrate->jumlah = request('total');
+            $detailrate->save();
+        } else {
+            $detailrate = MDetailrevenue::create([
+                'shipmentid' => request('shipmentid'),
+                'rateid' => '10012',
+                'descript' => 'Drop',
+                'nominal' => request('nominal'),
+                'qty' => request('qty'),
+                'jumlah' => request('total'),
+                'pph' => '0',
+                'pajak' => '0',
+                'f_edit' => '1',
+            ]);
+        }
+        return redirect()->route('shipment.detail', $request->shipmentid);
+
+    }
+    public function inpickup($id)
+    {
+        $detailrate = MDetailrevenue::join('rate', 'detailrevenue.rateid', '=', 'rate.rateid')
+            ->where('shipmentid', $id)
+            ->where('rate.kdakun', '1001')
+            ->get();
+        $jmlitem = $detailrate->count();
+        $shipment = MShipment::with('getcustomer', 'getsales', 'getkategori')
+            ->where('shipmentid', $id)
+            ->first();
+        return view('shipment.inpickup', compact('shipment', 'detailrate', 'jmlitem'));
+    }
+    public function storepickup(Request $request)
+    {
+        $revenue = MDetailrevenue::where('rateid', '10013')->count();
+        if ($revenue>0) {
+            $detailrate = MDetailrevenue::where('rateid', '10013')->first();
+            $detailrate->nominal = request('nominal');
+            $detailrate->qty = request('qty');
+            $detailrate->jumlah = request('total');
+            $detailrate->save();
+        } else {
+            $detailrate = MDetailrevenue::create([
+                'shipmentid' => request('shipmentid'),
+                'rateid' => '10013',
+                'descript' => 'Pickup',
+                'nominal' => request('nominal'),
+                'qty' => request('qty'),
+                'jumlah' => request('total'),
+                'pph' => '0',
+                'pajak' => '0',
+                'f_edit' => '1',
+            ]);
+        }
+        return redirect()->route('shipment.detail', $request->shipmentid);
+
+    }
+
     public function storeujo(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -552,7 +674,8 @@ class ShipmentController extends Controller
 
             // DB::commit();
 
-            return Redirect()->route('shipment.detail',$shipment->shipmentid)
+            return Redirect()
+                ->route('shipment.detail', $shipment->shipmentid)
                 ->with('success', 'Data Berhasil Disimpan');
         }
     }
@@ -588,9 +711,9 @@ class ShipmentController extends Controller
     }
     public function listpod($id)
     {
-        $shipmentid=    $id;
+        $shipmentid = $id;
         $docpod = MDocpod::where('shipmentid', $id)->get();
-        return view('shipment.listpod', compact('docpod','shipmentid'));
+        return view('shipment.listpod', compact('docpod', 'shipmentid'));
     }
     public function changeroute($id)
     {

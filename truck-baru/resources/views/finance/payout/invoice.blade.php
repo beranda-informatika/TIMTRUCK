@@ -34,12 +34,12 @@
 
                                 <div class="float-start mt-3">
                                     <p>
-                                        <strong>Invoice Date: </strong> {{ $item->tglinvoice }}<br>
-                                        <strong>SO ID: </strong> {{ $item->shipmentid }} <br>
-                                        <strong>Driver : </strong> {{ $item->getshipment->getdriver->namadriver }}
+                                        <strong>Request Date: </strong> {{ $item->tglinvoice }}<br>
+                                        <strong>No UJO : </strong> {{ $item->noujo }} <br>
+                                        <strong>Driver : </strong> {{ $item->getujo->getshipment->getdriver->namadriver }}
                                     </p>
                                     <address>
-                                        <strong>Keterangan :</strong><br>
+                                        <strong>Payment Description :</strong><br>
                                         {{ $item->keterangan }}<br>
 
                                     </address>
@@ -58,90 +58,7 @@
                         </div>
                         <!-- end row -->
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class=" mt-2">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th scope="col">Akun</th>
-                                                <th scope="col">Rate Id</th>
-                                                <th scope="col">Nama Rate</th>
-                                                <th scope="col">Nominal</th>
-                                                <th scope="col">Qty</th>
-                                                <th scope="col">Jumlah</th>
-                                                <th scope="col">pph (%)</th>
-                                                <th scope="col">Amount PPh</th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1;
-                                            $total = 0;
-                                            $revenue = 0;
-                                            $pph = 0;
-                                            $pajak = 0;
-                                            $ujodriver = 0;
-                                            ?>
-                                            @foreach ($item->getdetailinvoice as $data)
-                                                <tr>
-                                                    <td width="3%">{{ $i }}</td>
-                                                    <td width="10%">
-                                                        {{ $data->getrate->kdakun }} -
-                                                        {{ $data->getrate->getakun->namaakun }}
-                                                    </td>
-                                                    <td width="3%">
-                                                        {{ $data->rateid }}
-
-                                                    </td>
-                                                    <td width="15%">
-
-                                                        {{ $data->getrate->namarate }}
-                                                    </td>
-
-                                                    <td width="10%" style="text-align: right;">
-
-                                                        {{ number_format($data->nominal, 0) }}
-                                                    </td>
-
-                                                    <td width="5%" style="text-align: right;">
-
-                                                        {{ $data->qty }}
-
-                                                    </td>
-                                                    <td width="10%" style="text-align: right;">
-
-                                                        {{ number_format($data->jumlah, 0) }}
-
-                                                    </td>
-                                                    <td width="5%" style="text-align: right;">
-
-                                                        {{ $data->pph }}
-
-                                                    </td>
-                                                    <td width="5%" style="text-align: right;">
-
-                                                        {{ number_format($data->pajak, 0) }}
-
-                                                    </td>
-
-                                                </tr>
-                                                <?php
-                                                if ($data->getrate->kdakun == '1001') {
-                                                    $revenue = $revenue + $data->jumlah;
-                                                } elseif ($data->getrate->kdakun == '5003') {
-                                                    $pajak = $pajak + $data->nominal;
-                                                } elseif ($data->getrate->kdakun == '5002') {
-                                                    $ujodriver = $ujodriver + $data->jumlah;
-                                                }
-                                                $i++; ?>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-xl-6 col-6">
                                 <div class="clearfix mt-4">
@@ -150,7 +67,7 @@
                             </div>
                             <div class="col-xl-3 col-6 offset-xl-3">
 <br>
-                                <h3 class="text-end">Total RP {{ number_format($ujodriver) }}</h3>
+                                <h3 class="text-end">Total RP {{ number_format($item->total) }}</h3>
                             </div>
                         </div>
                         <hr>
@@ -158,7 +75,7 @@
                             <div class="float-end">
                                 <a href="javascript:window.print()" class="btn btn-dark waves-effect waves-light"><i
                                         class="fa fa-print"></i></a>
-                                <a href="{{ route('shipment.detail',$item->shipmentid) }}"
+                                <a href="{{ route('ujo.listujo') }}"
                                     class="btn btn-primary waves-effect waves-light">Close</a>
                             </div>
                             <div class="clearfix"></div>

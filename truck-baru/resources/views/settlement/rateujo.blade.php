@@ -18,7 +18,6 @@
         $totalujolama = 0; $total=0; ?>
 
         @foreach ($detailrate as $data)
-            @if($data->rateid!="50027")
             <tr @if ($data->f_edit == '0') style="background:rgb(239, 237, 237); "  readonly @endif>
                 <td @if ($data->f_invoice == '0') style="background:rgb(7, 244, 237);  text-align:right" @endif>
 
@@ -92,7 +91,7 @@
                 </td>
 
             </tr>
-            @endif
+
             <?php $i++; ?>
         @endforeach
 

@@ -35,9 +35,10 @@
             </ul>
         </div>
     @endif
-        <form role="form" class="parsley-examples" action="{{ route('ujo.store') }}"
+        <form role="form" class="parsley-examples" action="{{ route('ujo.update',$shipment->getujo->noujo) }}"
             method="POST">
-            @csrf          
+            @method('PUT')
+            @csrf
             <div class="mb-3">
                 <label for="example-select" class="form-label">SO ID</label>
                 <input type="text" id="shipmentid" name="shipmentid" class="form-control"
@@ -67,33 +68,33 @@
                 <label for="example-select" class="form-label">No.UJO</label>
                 <input type="text" id="noujo" name="noujo" class="form-control"
                 value="@if($shipment->getujo->noujo!=null) {{ $shipment->getujo->noujo }} @endif" readonly>
-              
-            
+
+
             </div>
             <div class="mb-3">
                 <label for="example-select" class="form-label">Date UJO</label>
                 <input type="text" id="tglujo" name="tglujo" class="form-control"
                 value="@if($shipment->getujo->tglujo!=null) {{ $shipment->getujo->tglujo }} @endif" readonly>
-              
-            
+
+
             </div>
             <div class="mb-3">
                 <label for="example-select" class="form-label">Nominal UJO</label>
                 <input type="text" id="nominalujo" name="nominalujo" class="form-control"
                 value="@if($shipment->getujo->nominalujo!=null) {{ $shipment->getujo->nominalujo }} @endif" readonly>
-              
-            
+
+
             </div>
             <div class="mb-3">
                 <label for="example-select" class="form-label">Paid off UJO</label>
                 <input type="text" id="terbayar" name="terbayar" class="form-control"
                 value="{{ $shipment->getujo->terbayar }}" readonly>
-              
-            
+
+
             </div>
            @include('ujo.addsrateujo')
 
-           
+
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="{{ route('ujo.index') }}" class="btn btn-secondary">Close</a>
         </form>

@@ -11,6 +11,9 @@ use App\Models\MQuotation;
 use App\Models\MRate;
 use App\Models\MRute;
 use App\Models\MShipment;
+use App\Models\MSO;
+use App\Models\MUjo;
+use App\Models\MDetailujoongoing;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -315,13 +318,18 @@ class SettlementController extends Controller
     }
     public function inujo($id)
     {
-        $detailrate = MDetailshipment::join('rate', 'detailrateshipment.rateid', '=', 'rate.rateid')->
-            where('shipmentid', $id)->
+
+        $ujo = MUjo::where('shipmentid', $id)->first();
+        $noujo = $ujo->noujo;
+
+        $detailrate = MDetailujoongoing::join('rate', 'detailujoongoing.rateid', '=', 'rate.rateid')->
+            where('noujo', $noujo)->
             where('rate.kdakun', '5002')
             ->get();
+
         $jmlitem = $detailrate->count();
         $shipment = MShipment::with('getcustomer', 'getsales', 'getkategori')->where('shipmentid', $id)->first();
-        return view('settlement.inujo', compact('shipment', 'detailrate', 'jmlitem'));
+        return view('settlement.inujo', compact('shipment', 'detailrate', 'jmlitem', 'noujo'));
 
     }
     public function inrevenue($id)
@@ -375,8 +383,8 @@ class SettlementController extends Controller
                     $jumlah = $request->jumlah[$i];
                 }
                 if ($request->idratequotation[$i] != null) {
-                    $save = MDetailshipment::where('id', $request->idratequotation[$i])->update([
-                        'shipmentid' => $request->shipmentid,
+                    $save = MDetailujoongoing::where('id', $request->idratequotation[$i])->update([
+                        'noujo' => $request->noujo,
                         'rateid' => $request->rateid[$i],
                         'nominalsettle' => $nominal,
                         'qty' => $request->qty[$i],
@@ -395,7 +403,7 @@ class SettlementController extends Controller
 
                 } else {
                     $save = MDetailshipmnet::create([
-                        'quotationid' => $request->id,
+                        'noujo' => $request->noujo,
                         'rateid' => $request->rateid[$i],
                         'nominalsettle' => $nominal,
                         'qty' => $request->qty[$i],
@@ -416,7 +424,7 @@ class SettlementController extends Controller
                 }
 
             }
-            DB::select('call  updfeeshipment(?,?,?)', array($shipment->shipmentid, '50031', $pajak));
+          //  DB::select('call  updfeeshipment(?,?,?)', array($shipment->shipmentid, '50031', $pajak));
 
             // DB::commit();
 
@@ -443,7 +451,13 @@ class SettlementController extends Controller
         $quotation = MShipment::find($request->id);
         $quotation->f_status = 'Settlement';
         $quotation->save();
-        MDetailshipment::where('shipmentid', $request->id)->update(['f_settle' => '1']);
+        //copy revenue
+
+
+        $ujo = MUjo::where('shipmentid', $id)->first();
+        $noujo = $ujo->noujo;
+
+
         return redirect()->back();
     }
 }

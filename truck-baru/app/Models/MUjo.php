@@ -20,6 +20,10 @@ class MUjo extends Model
     //protected $keyType = 'string';
 
     protected $guarded = [];
-    
+    function getshipment()
+    {
+        return $this->belongsTo(MShipment::class, 'shipmentid', 'shipmentid');
+    }
+
 
 }

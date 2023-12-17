@@ -12,7 +12,7 @@
 
 
 @endsection
-@section('title', 'Sales Order')
+@section('title', 'UJO')
 @section('content')
 @include('sweetalert::alert')
 
@@ -23,7 +23,7 @@
     <div class="row">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Sales Order</h4>
+                <h4 class="card-title">UJO</h4>
             </div>
 
             <div class="card-body">
@@ -62,7 +62,7 @@
         </div>
     </div>
     <div id="tabeldata"></div>
-   
+
 
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');

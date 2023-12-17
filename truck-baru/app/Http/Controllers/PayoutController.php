@@ -9,6 +9,8 @@ use App\Models\MRate;
 use App\Models\MRute;
 use App\Models\MShipment;
 use App\Models\MInvoice;
+use App\Models\MUjo;
+use App\Models\MDetailujoongoing;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -51,13 +53,10 @@ class PayoutController extends Controller
 
     public function forminvoice($id)
     {
-        $shipment = MShipment::with('getdetailshipment')->where('shipmentid',$id)->get();
-        $detailshipment = MDetailshipment::join('rate','detailrateshipment.rateid','=','rate.rateid')->where('rate.kdakun','=','5002')
-        ->with('getrate')->where('shipmentid',$id);
-
-        $datarate=$detailshipment->statusinvoice('0')->get();
-        $kategori = MKategori::get();
-        return view('finance.payout.forminvoice', compact('shipment', 'kategori', 'detailshipment', 'datarate'));
+        $ujo = MUjo::with('getshipment')->where('noujo',$id)->get();
+        $detailujo = MDetailujoongoing::join('rate','detailujoongoing.rateid','=','rate.rateid')->where('rate.kdakun','=','5002')
+        ->with('getrate')->where('noujo',$id)->get();
+        return view('finance.payout.forminvoice', compact('ujo', 'detailujo'));
     }
     public function detail($id)
     {
@@ -68,9 +67,8 @@ class PayoutController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'shipmentid' => 'required',
-            'checked' => 'required',
-            'total'=>'required'
+            'noujo' => 'required',
+            'bayar'=>'required'
         ]);
 
         if ($validator->fails()) {
@@ -83,48 +81,11 @@ class PayoutController extends Controller
                 $noinvoice=$this->genkode();
                 $invoice = new MInvoice();
                 $invoice->noinvoice = $noinvoice;
-                $invoice->shipmentid = $request->shipmentid;
+                $invoice->noujo = $request->noujo;
                 $invoice->tglinvoice = Carbon::now();
                 $invoice->keterangan = $request->description;
+                $invoice->total = $request->bayar;
                 $invoice->save();
-
-                $shipmentid = $request->shipmentid;
-                $jml = count($request->checked);
-
-                $pajak=0;
-                $total=0;
-                for ($i = 0; $i < $jml; $i++) {
-                    $iditem=$request->checked[$i];
-                    $datarate=MDetailshipment::where('id',$iditem)->first();
-                    $nominal=$datarate->nominal;
-
-
-                    if ($nominal==null) {
-                        $nominal=0;
-                        $jumlah=0;
-                    }
-                    else {
-                        $nominal=$datarate->nominal;
-                        $jumlah=$datarate->jumlah;
-                    }
-                    MDetailinvoice::create([
-                        'shipmentid' => $shipmentid,
-                        'noinvoice' => $noinvoice,
-                        'iddetailrateshipment'=>$datarate->id,
-                        'rateid' => $datarate->rateid,
-                        'nominal' => $nominal,
-                        'qty' => $datarate->qty,
-                        'jumlah' => $jumlah,
-                    ]);
-                    $total=$total+$jumlah;
-
-                }
-
-                $invoice=MInvoice::where('noinvoice',$noinvoice)->first();
-                $invoice->total = $total;
-                $invoice->sisa = $total;
-                $simpan = $invoice->save();
-
                 DB::commit();
                 Alert::success('Berhasil', 'Data Berhasil Disimpan');
 
@@ -142,13 +103,13 @@ class PayoutController extends Controller
     }
     public function invoice($id)
     {
-        $invoice = MInvoice::with('getdetailinvoice')->where('noinvoice',$id)->get();
+        $invoice = MInvoice::where('noinvoice',$id)->get();
         return view('finance.payout.invoice', compact('invoice'));
     }
     public function listinvoice($id)
     {
         $shipmentid=$id;
-        $invoice = MInvoice::with('getdetailinvoice')->where('shipmentid',$id)->get();
+        $invoice = MInvoice::where('noujo',$id)->get();
         return view('finance.payout.listinvoice', compact('invoice','shipmentid'));
     }
 

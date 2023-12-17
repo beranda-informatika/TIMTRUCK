@@ -19,23 +19,28 @@
         <div class="col-2">
 
             @if (Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 || Auth::user()->roles_id == 4)
-                @if ($shipment->f_operational == 1)
-                    <div id="kode" style="display: none">{{ $shipment->shipmentid }}</div>
-                    <a href="{{ route('shipment.inujo', $shipment->shipmentid) }}" class="btn btn-sm btn-primary">UJO</a><br>
 
-                    <a href="{{ route('payout.listinvoice', $shipment->shipmentid) }}" class="btn btn-sm btn-success">LIST
-                        PAYMENT UJO
-                    </a><br>
+                <a href="{{ route('shipment.listpod', $shipment->shipmentid) }}" class="btn btn-sm btn-info">DOC
+                    POD LOADING</a><br>
+                @if ($shipment->f_status == 'New' && $shipment->f_status == 'Loading')
+                    <a href="{{ route('shipment.changeroute', $shipment->shipmentid) }}" class="btn btn-sm btn-danger">Change
+                        Route</a><br>
                 @endif
-                @if ($shipment->f_status == 'Loading')
-                    <a href="{{ route('shipment.listpod', $shipment->shipmentid) }}" class="btn btn-sm btn-info">DOC
-                        POD</a><br>
-                    <a href="{{ route('shipment.changeroute', $shipment->shipmentid) }}"
-                        class="btn btn-sm btn-danger">Change Route</a><br>
-                @endif
+                @if ($shipment->typeroute == 'load' )
+                    <a href="{{ route('shipment.inloadkgmrc', $shipment->shipmentid) }}" class="btn btn-sm btn-danger">Input Loading Kg</a><br>
+
+                    @endif
+
+                    @if ($shipment->multidrop == '1' )
+                    <a href="{{ route('shipment.indrop', $shipment->shipmentid) }}" class="btn btn-sm btn-danger">Input Drop</a><br>
+                    @endif
+                    @if ($shipment->multipickup == '1' )
+
+                    <a href="{{ route('shipment.inpickup', $shipment->shipmentid) }}" class="btn btn-sm btn-danger">Input Pickup</a><br>
+                        @endif
                 @if ($shipment->f_status == 'Shiping')
                     <a href="{{ route('shipment.listpod', $shipment->shipmentid) }}" class="btn btn-sm btn-info">DOC
-                        POD</a><br>
+                        POD SHIPING</a><br>
                 @endif
             @endif
             <div id="kode" style="display: none">{{ $shipment->shipmentid }}</div>
@@ -166,24 +171,22 @@
             <div class="mb-3">
                 <label for="example-textarea" class="form-label">Multi Drop</label>
 
-                @if ($shipment->multidrop=="1")
-                Y<br>
-                @foreach ($shipment->getmultidrop as $itemdrop )
-                    {{ $itemdrop->location }} <br>
-
-                @endforeach
+                @if ($shipment->multidrop == '1')
+                    Y<br>
+                    @foreach ($shipment->getmultidrop as $itemdrop)
+                        {{ $itemdrop->location }} <br>
+                    @endforeach
 
                 @endif
 
             </div>
             <div class="mb-3">
                 <label for="example-textarea" class="form-label">Multi Pickup</label>
-                @if ($shipment->multipickup=="1")
-                Y<br>
-                @foreach ($shipment->getmultipickup as $itempickup )
-                    {{ $itempickup->location }} <br>
-
-                @endforeach
+                @if ($shipment->multipickup == '1')
+                    Y<br>
+                    @foreach ($shipment->getmultipickup as $itempickup)
+                        {{ $itempickup->location }} <br>
+                    @endforeach
 
                 @endif
 

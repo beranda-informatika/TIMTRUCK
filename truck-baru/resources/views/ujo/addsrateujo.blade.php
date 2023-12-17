@@ -15,10 +15,10 @@
     </thead>
     <tbody>
         <?php $i = 0;
-        $total = 0; 
-        
+        $total = 0;
+
         ?>
-            
+
         @foreach ($detailrate as $data)
             <tr @if ($data->f_edit == '0') style="background:rgb(239, 237, 237); "  readonly
             @endif
@@ -49,14 +49,16 @@
                     <input type="text" name="descript[]" id="descript{{ $i }}"
                     value="{{ $data->descript }}"
                         style="text-align: left; width: 200px;">
-                    
+
                 </td>
                 <td style="text-align: right;">
                     <input class="innilai" type="text" name="nominal[]" id="nominal{{ $i }}"
                         value="{{ $data->nominal }}"
-                         style="text-align: left; width: 150px; background:rgb(239, 237, 237);  text-align:right" require readonly
+                        @if ($data->f_edit == '0')
+                            style="text-align: left; width: 150px; background:rgb(239, 237, 237);  text-align:right" require readonly
+                        @else
+                        style="text-align: right; width: 150px" @endif
                         >
-
                     <input class="innilai" type="hidden" name="qty[]" id="qty{{ $i }}"
                         value="{{ $data->qty }}" @if ($data->f_edit == '0') style="text-align: left; width: 40PX; background:rgb(239, 237, 237);  text-align:right" require readonly
                         @else
@@ -115,9 +117,9 @@
 </table>
 <div style="text-align: right; padding:10px">
     <div class="btn btn-sm btn-info  btn-action"
-    data-url="{{ route('ujo.inrate',$shipment->shipmentid) }}"
+    data-url="{{ route('ujo.inrate',$shipment->getujo->noujo) }}"
     id="btnAction1">Add Rate</div>
-    
+
 </div>
 
 <script>
@@ -126,9 +128,9 @@
     });
 
     function total() {
-        
+
         var x = {{ $jmlitem }};
-       
+
         var total = 0;
         for (i = 0; i < x; i++) {
             var jumlah = parseInt($("#nominal" + i).val());

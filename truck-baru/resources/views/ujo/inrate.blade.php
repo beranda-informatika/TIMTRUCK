@@ -2,8 +2,8 @@
     <form id="add-rate-form">
         @csrf
         <div class="form-group">
-            <label for="kdbarang">Shipment ID </label>
-            <input type="text" class="form-control" id="inshipmentid" name="inshipmentid" value="{{ $id }}" readonly>
+            <label for="kdbarang">No Ujo </label>
+            <input type="text" class="form-control" id="noujo" name="noujo" value="{{ $id }}" readonly>
         </div>
         <div class="form-group">
             <label for="kdbarang">Rate </label>
@@ -54,15 +54,12 @@
     });
     $("#add-rate-form").submit(function(event){
         event.preventDefault();
-        var kdkategori = $('#kdkategori').val();
-        var idjenis = $('#idjenis').val();
-        var idlokasi = $('#idlokasi').val();
          $.ajax({
               url: "/ujo/ratestore",
               type:"POST",
               data:
               {
-                'shipmentid': $('#inshipmentid').val(),
+                'noujo': $('#noujo').val(),
                 'routeid': $('#inrouteid').val(),
                 'rateid': $('#inrateid').val(),
                 'descript' : $('#indescript').val(),

@@ -89,10 +89,7 @@
                                                 <div id="kode" style="display: none">{{ $key->shipmentid }}</div>
                                                 <a href="{{ route('settlement.inujo', $key->shipmentid) }}"
                                                     class="btn btn-sm btn-primary">ACTUAL UJO</a>
-                                                    @if ($key->typeroute == "load")
-                                                    <a href="{{ route('settlement.inrevenue', $key->shipmentid) }}"
-                                                    class="btn btn-sm btn-danger">ACTUAL MRC</a>
-                                                    @endif
+
                                                     @if ($key->f_status == "Shiping")
                                                     <a href="{{ route('shipment.listpod', $key->shipmentid) }}"
                                                         class="btn btn-sm btn-info" >DOC POD</a>
@@ -106,7 +103,7 @@
                                             <div class="btn btn-sm btn-warning entry">Entry Unit & Driver</div>
                                         @endif
                                         @if (Auth::user()->roles_id == 4 && $key->f_status == "Shiping" && $key->f_operational == 1)
-                                        <div class="accsettle btn btn-sm btn-pink">Acc Close</div>
+                                        <div class="accsettle btn btn-sm btn-pink">Appr Close</div>
                                         @endif
                                         @if (Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2 )
                                             <form action="{{ route('shipment.destroy', $key->shipmentid) }}"

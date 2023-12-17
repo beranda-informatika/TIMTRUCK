@@ -59,8 +59,7 @@ class ShipingController extends Controller
     }
     public function formloading($id)
     {
-        $shipment = MShipment::with('getdetailshipment')
-            ->where('shipmentid', $id)
+        $shipment = MShipment::where('shipmentid', $id)
             ->get();
 
         $kategori = MKategori::get();
@@ -68,8 +67,7 @@ class ShipingController extends Controller
     }
     public function formapprove($id)
     {
-        $shipment = MShipment::with('getdetailshipment')
-            ->where('shipmentid', $id)
+        $shipment = MShipment::where('shipmentid', $id)
             ->get();
 
         $kategori = MKategori::get();

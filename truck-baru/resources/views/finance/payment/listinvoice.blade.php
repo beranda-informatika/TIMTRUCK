@@ -41,20 +41,14 @@
 
                                     <thead>
                                         <tr>
-
-                                            <th scope="col">No.Invoice</th>
-                                            <th scope="col">Order ID</th>
-                                            <th scope="col">tgl.invoice</th>
-                                            <th scope="col">Keterangan</th>
+                                            <th scope="col">No.Request</th>
+                                            <th scope="col">NO UJO</th>
+                                            <th scope="col">Date Request</th>
+                                            <th scope="col">Description</th>
                                             <th scope="col">Nominal</th>
-                                            <th scope="col">Bayar</th>
-                                            <th scope="col">Sisa</th>
-                                            <th scope="col">Tgl.payment</th>
-                                            <th scope="col">Status Pembayaran</th>
-                                            <th scope="col">Status Lunas</th>
+                                            <th scope="col">Date payment</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Action</th>
-
-
 
                                         </tr>
                                     </thead>
@@ -63,18 +57,12 @@
                                         @foreach ($invoice as $key)
                                             <tr>
                                                 <td scope="col">{{ $key->noinvoice }}</td>
-
-                                                <td scope="col">{{ $key->shipmentid }}</td>
+                                                <td scope="col">{{ $key->noujo }}</td>
                                                 <td scope="col">{{ $key->tglinvoice }}</td>
                                                 <td scope="col">{{ $key->keterangan }}</td>
                                                 <td scope="col">{{ number_format($key->total) }}</td>
-                                                <td scope="col">{{ number_format($key->bayar) }}</td>
-                                                <td scope="col">{{ number_format($key->sisa) }}</td>
-
-
                                                 <td scope="col">{{ $key->tglpayment }}</td>
                                                 <td scope="col">{{ $key->f_status }}</td>
-                                                <td scope="col">@if ($key->f_lunas==1) Lunas @else Belum lunas @endif</td>
                                                 <td scope="col">
 
                                                     <a href="{{ URL::to('/payment/invoice/' . $key->noinvoice) }}"
@@ -85,7 +73,7 @@
                                                     <div id="kode" style="display: none">{{ $key->noinvoice }}
                                                     </div>
 
-                                                    @if ($key->f_lunas == '0')
+                                                    @if ($key->f_status == 'notpaid')
                                                         <div class="pay btn btn-sm btn-warning">Payment</div>
                                                     @endif
 
@@ -113,7 +101,7 @@
     $('.pay').click(function() {
         var id = $(this).siblings('#kode').text();
         $.ajax({
-            type: "post",
+            type: "get",
             data: {
                 id: id,
                 _token: csrf

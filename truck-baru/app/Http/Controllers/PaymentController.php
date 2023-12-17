@@ -11,6 +11,7 @@ use App\Models\MInvoice;
 use App\Models\MPayment;
 use App\Models\MJurnal;
 use App\Models\MDetailinvoice;
+use App\Models\MUjo;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -25,14 +26,14 @@ class PaymentController extends Controller
 
     public function index()
     {
-        $invoice = MInvoice::with('getdetailinvoice')->where('f_lunas','0')->get();
+        $invoice = MInvoice::where('f_status','notpaid')->get();
         return view('finance.payment.listinvoice', compact('invoice'));
 
     }
 
     public function historyujo()
     {
-        $invoice = MInvoice::with('getdetailinvoice')->where('f_status','paid')->get();
+        $invoice = MInvoice::where('f_status','paid')->get();
         return view('finance.payment.listinvoice', compact('invoice'));
 
     }
@@ -46,64 +47,43 @@ class PaymentController extends Controller
 
     public function invoice($id)
     {
-        $invoice = MInvoice::with('getdetailinvoice')->where('noinvoice',$id)->get();
+        $invoice = MInvoice::where('noinvoice',$id)->get();
         return view('finance.payment.invoice', compact('invoice'));
     }
     public function formpay(Request $request)
     {
-        $shipment=MInvoice::where('noinvoice',$request->id)->first();
-        $shipmentid=$shipment->shipmentid;
-        $debet=MJurnal::where('shipmentid',$shipmentid)->sum('debet');
-        $kredit=MJurnal::where('shipmentid',$shipmentid)->sum('kredit');
-        $totalpembayaran=$debet-$kredit;
-        $invoice = MInvoice::with('getshipment','getdetailinvoice')->where('noinvoice',$request->id)->get();
-
-        return view('finance.payment.formpay', compact('invoice','totalpembayaran'));
+        $invoice = MInvoice::with('getujo')->where('noinvoice',$request->id)->get();
+        return view('finance.payment.formpay', compact('invoice'));
     }
     public function store(Request $request){
         MPayment::create([
             'noinvoice' => $request->noinvoice,
             'datepayment' => Carbon::now(),
-            'jumlah' => $request->nominal,
+            'jumlah' => $request->total,
             'bank' => $request->bank,
             'namarekening' => $request->namarekening,
             'norekening' => $request->norekening,
-            'shipmentid' => $request->shipmentid,
+            'noujo' => $request->noujo,
         ]);
-
+        $ujo=MUjo::find($request->noujo);
+        $shipmentid=$ujo->shipmentid;
+        $terbayar=$ujo->terbayar+$request->total;
+        $ujo->terbayar=$terbayar;
+        if($ujo->nominalujo==$terbayar){
+            $ujo->f_lunas='1';
+        }
+        $ujo->save();
+        $shipment=MShipment::find($shipmentid);
+        $statusshipment=$shipment->f_status;
+        if($statusshipment=='New'){
+            $shipment->f_status='Payout';
+            $shipment->save();
+        }
         $invoice=MInvoice::find($request->noinvoice);
 
-        $bayar=$request->nominal+$request->totalpembayaran;
-        $invoice->bayar=$bayar;
-        $invoice->sisa = $invoice->total-$bayar;
-        if($bayar==$invoice->total){
-            $invoice->f_lunas='1';
-        }
         $invoice->f_status='paid';
         $invoice->tglpayment=Carbon::now();
         $invoice->save();
-        //cek rate
-        $cek=MDetailinvoice::where('noinvoice',$request->noinvoice)->where('rateid','50027')->get();
-        if ($cek->count()>0) {
-            MJurnal::create([
-                'shipmentid' => $request->shipmentid,
-                'rateid'=>"50027",
-                'kdakun' => "102",
-                'debet' => $request->nominal,
-                'kredit' => 0,
-                'kodetr' => "TR001"
-            ]);
-        }
-        else {
-            MJurnal::create([
-                'shipmentid' => $request->shipmentid,
-                'rateid'=>"50021",
-                'kdakun' => "501",
-                'debet' => $request->nominal,
-                'kredit' => 0,
-                'kodetr' => "TR002"
-            ]);
-        }
         Alert::success('Success', 'Data berhasil disimpan');
         return redirect()->route('payment.index')->with('success', 'Data berhasil diubah');
 

@@ -28,41 +28,45 @@
                     </div>
                 @endif
 
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
 
-                                <label for="inputEmail3" class="col-4 col-form-label">Customer<span
-                                        class="text-danger">*</span></label>
-                                        <input type="text" id="namacustomer" name="namacustomer" class="form-control" value="{{ $shipment->getcustomer->namacustomer }}" readonly required>
-                                        <input type="hidden" id="aksi" name="aksi" class="form-control" value="ubah" readonly required>
-
-
-                                            <input type="hidden" id="kdcustomer" name="kdcustomer" class="form-control" value="{{ $shipment->kdcustomer }}" readonly required>
-                                            <label for="shipmentid" class="col-4 col-form-label">No.SO<span
-                                                class="text-danger">*</span></label>
-                                            <input type="text" id="shipmentid" name="shipmentid" class="form-control" value="{{ $shipment->shipmentid }}" readonly required>
+                            <label for="inputEmail3" class="col-4 col-form-label">Customer<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="namacustomer" name="namacustomer" class="form-control"
+                                value="{{ $shipment->getcustomer->namacustomer }}" readonly required>
+                            <input type="hidden" id="aksi" name="aksi" class="form-control" value="ubah"
+                                readonly required>
 
 
+                            <input type="hidden" id="kdcustomer" name="kdcustomer" class="form-control"
+                                value="{{ $shipment->kdcustomer }}" readonly required>
+                            <label for="shipmentid" class="col-4 col-form-label">No.SO<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="shipmentid" name="shipmentid" class="form-control"
+                                value="{{ $shipment->shipmentid }}" readonly required>
 
 
 
-                            </div>
-                            <div class="mb-3">
+
+
+                        </div>
+                        <div class="mb-3">
                             <div class="btn btn-sm btn-primary" id="btncari">Open Quotations</div>
                             <div class="btn btn-sm btn-primary" id="btncariroute">Open Route</div>
-                            </div>
-                            <div class="mb-3">
-                                <div id="tabelrate"></div>
-                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div id="tabelrate"></div>
+                        </div>
 
 
-                        </div> <!-- end col -->
+                    </div> <!-- end col -->
 
-                        <div class="col-lg-6">
-                            <div id="formmarketing"></div>
-                        </div> <!-- end col -->
-                    </div>
+                    <div class="col-lg-6">
+                        <div id="formmarketing"></div>
+                    </div> <!-- end col -->
+                </div>
 
 
 
@@ -73,7 +77,6 @@
     </div><!-- end col -->
 </div>
 <script>
-
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
 
@@ -100,6 +103,7 @@
             }
         });
     }
+
     function pilihrouteall() {
         var quotationid = $("#kdcustomer").val();
         var aksi = $("#aksi").val();
@@ -117,8 +121,6 @@
             }
         });
     }
-
-
 </script>
 
 

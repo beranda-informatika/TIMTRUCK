@@ -38,7 +38,7 @@
 
                     <form role="form" class="parsley-examples" action="{{ route('shipment.storeujo') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="trshipment" id="trshipment" value="revenue"> 
+                        <input type="hidden" name="trshipment" id="trshipment" value="revenue">
                         <div class="row">
                             @if ($message = Session::get('success'))
                                 <div class="alert alert-success">

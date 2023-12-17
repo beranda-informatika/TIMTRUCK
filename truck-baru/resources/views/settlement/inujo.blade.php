@@ -61,7 +61,14 @@
                             <div class="col-lg-6">
                                 <div>
                                     <div class="mb-1">
-                                        <label for="example-text-input" class="form-label">Shipment ID</label>
+                                        <label for="example-text-input" class="form-label">NO UJO</label>
+                                        <input class="form-control" type="text" name="noujo" id="noujo"
+                                            placeholder="shipmentid" required style="text-transform:uppercase" value="{{ $noujo }}" readonly>
+
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="example-text-input" class="form-label">NO SO</label>
+
                                         <input class="form-control" type="text" name="shipmentid" id="shipmentid"
                                             placeholder="shipmentid" required style="text-transform:uppercase" value="{{ $shipment->shipmentid }}" readonly>
                                     </div>

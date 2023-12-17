@@ -38,7 +38,7 @@
 
             <div class="card-body">
 
-                <a href="{{ route('shipment.detail', $shipmentid) }}" class="btn btn-primary mb-3">Back</a>
+                <a href="{{ route('ujo.listujo') }}" class="btn btn-primary mb-3">Back</a>
                 <div class="responsive-table-plugin">
                     <div class="table-rep-plugin">
                         <div class="table-responsive" data-pattern="priority-columns"  style="overflow-x:scroll;">
@@ -48,13 +48,11 @@
                                     <tr>
 
                                         <th scope="col">No.Invoice</th>
-                                        <th scope="col">Order ID</th>
-                                        <th scope="col">tgl.invoice</th>
-                                        <th scope="col">Keterangan</th>
+                                        <th scope="col">NO UJO</th>
+                                        <th scope="col">Date Request</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">Nominal</th>
-                                        <th scope="col">Bayar</th>
-                                        <th scope="col">Sisa</th>
-                                        <th scope="col">Tgl.payment</th>
+                                        <th scope="col">Date payment</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
 
@@ -68,13 +66,10 @@
                                         <tr>
                                             <td scope="col">{{ $key->noinvoice }}</td>
 
-                                            <td scope="col">{{ $key->shipmentid }}</td>
+                                            <td scope="col">{{ $key->noujo }}</td>
                                             <td scope="col">{{ $key->tglinvoice }}</td>
                                             <td scope="col">{{ $key->keterangan }}</td>
                                             <td scope="col">{{ number_format($key->total) }}</td>
-                                            <td scope="col">{{ number_format($key->bayar) }}</td>
-                                            <td scope="col">{{ number_format($key->sisa) }}</td>
-
                                             <td scope="col">{{ $key->tglpayment }}</td>
                                             <td scope="col">{{ $key->f_status }}</td>
                                             <td scope="col">

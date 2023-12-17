@@ -51,19 +51,12 @@ class UjoController extends Controller
         $ujo = MUjo::get();
         return view('ujo.index', compact('ujo'));
     }
-    public function listujo()
-    {
-        $ujo = MUjo::get();
-        return view('ujo.listujo', compact('ujo'));
-    }
     public function getsalesorder(Request $request)
     {
         if ($request->kdcustomer == 'all') {
             $shipment = MShipment::with('getujo')->get();
         } else {
-            $shipment = MShipment::with('getujo')
-                ->where('kdcustomer', $request->kdcustomer)
-                ->get();
+            $shipment = MShipment::with('getujo')->where('kdcustomer', $request->kdcustomer)->get();
         }
 
         return view('ujo.salesorder', compact('shipment'));
@@ -71,6 +64,7 @@ class UjoController extends Controller
 
     public function create()
     {
+
         return view('ujo.index');
     }
     public function edit($id)
@@ -90,36 +84,42 @@ class UjoController extends Controller
     }
     public function formujo(Request $request)
     {
-
-        $cekujo = MUjo::where('shipmentid', $request->shipmentid)->count();
-        if ($cekujo > 0) {
-            $shipment = MShipment::with('gettypetruck', 'getujo')
+        $cekujo=MUjo::where('shipmentid', $request->shipmentid)->count();
+        if ($cekujo>0){
+            $shipment = MShipment::with(
+                'gettypetruck','getujo')
                 ->where('shipmentid', $request->shipmentid)
                 ->first();
-
-            $detailrate = MDetailujoongoing::join('rate', 'detailujoongoing.rateid', '=', 'rate.rateid')
+                $detailrate = MDetailujoongoing::join('rate', 'detailujoongoing.rateid', '=', 'rate.rateid')
                 ->where('rate.kdakun', '5002')
-                ->where('noujo',$shipment->getujo->noujo)
                 ->get();
-            $jmlitem = $detailrate->count();
-            return view('ujo.formeditujo', compact('shipment', 'detailrate', 'jmlitem'));
-        } else {
-            $shipment = MShipment::with('gettypetruck', 'getujo')
+                $jmlitem=$detailrate->count();
+                return view('ujo.formeditujo', compact('shipment','detailrate','jmlitem'));
+        }
+        else {
+            $shipment = MShipment::with(
+                'gettypetruck','getujo')
                 ->where('shipmentid', $request->shipmentid)
                 ->first();
-            $quotationid = $shipment->quotationid;
-            //   dd($quotationid);
-            $detailrate = MDetailratequotation::join('rate', 'detailratequotation.rateid', '=', 'rate.rateid')
+                $quotationid=$shipment->quotationid;
+             //   dd($quotationid);
+                $detailrate = MDetailratequotation::join('rate', 'detailratequotation.rateid', '=', 'rate.rateid')
                 ->where('rate.kdakun', '5002')
                 ->where('rate.f_default', '1')
 
-                ->where('quotationid', $quotationid)
+                ->where('quotationid',$quotationid)
                 ->get();
-            $jmlitem = $detailrate->count();
-            return view('ujo.formujo', compact('shipment', 'detailrate', 'jmlitem'));
+                $jmlitem=$detailrate->count();
+                return view('ujo.formujo', compact('shipment','detailrate','jmlitem'));
         }
-    }
 
+
+    }
+    public function detail($id)
+    {
+        $shipment = MShipment::find($id);
+        return view('shipment.detail', compact('shipment'));
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -137,14 +137,14 @@ class UjoController extends Controller
             $ujo->noujo = $this->genkode();
             $ujo->shipmentid = $request->shipmentid;
             $ujo->tglujo = Carbon::now();
-            $ujo->terbayar = 0;
-            $ujo->nominalujo = $request->totalujo;
+            $ujo->terbayar= 0;
+            $ujo->nominalujo= $request->totalujo;;
 
             $simpan = $ujo->save();
             $noujo = $ujo->noujo;
-            $jmlrate = count($request->rateid);
+            $jmlrate=count($request->rateid);
 
-            for ($i = 0; $i < $jmlrate; $i++) {
+            for ($i=0; $i<$jmlrate; $i++) {
                 MDetailujoongoing::create([
                     'noujo' => $noujo,
                     'rateid' => $request->rateid[$i],
@@ -166,8 +166,8 @@ class UjoController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'shipmentid' => 'required',
-            'noujo' => 'required',
+            'kdunit' => 'required',
+            'kddriver' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -177,55 +177,19 @@ class UjoController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            MUjo::where('noujo',$request->noujo)->update(['nominalujo'=>$request->totalujo]);
-
-           // DB::beginTransaction();
+            // DB::beginTransaction();
             try {
-                $jml = count($request->nominal);
-                $jumlah = 0;
-                $pajak = 0;
-
-                for ($i = 0; $i < $jml; $i++) {
-                    $nominal = $request->nominal[$i];
-                    if ($nominal == null) {
-                        $nominal = 0;
-                        $jumlah = 0;
-                    } else {
-                        $nominal = $request->nominal[$i];
-                        $jumlah = $request->jumlah[$i];
-                    }
-
-                    if ($request->idratequotation[$i] != null) {
-
-                        $save = MDetailujoongoing::where('id', $request->idratequotation[$i])->update([
-                            'rateid' => $request->rateid[$i],
-                            'descript' => $request->descript[$i],
-                            'nominal' => $nominal,
-                            'qty' => $request->qty[$i],
-                            'jumlah' => $jumlah,
-                            'pph' => $request->pph[$i],
-                            'pajak' => $request->pajak[$i],
-
-                        ]);
-
-                    } else {
-                        $save = MDetailujoongoing::create([
-                            'noujo' => $request->noujo,
-                            'rateid' => $request->rateid[$i],
-                            'descript' => $request->descript[$i],
-                            'nominal' => $nominal,
-                            'qty' => $request->qty[$i],
-                            'jumlah' => $jumlah,
-                            'pph' => $request->pph[$i],
-                            'pajak' => $request->pajak[$i],
-
-                        ]);
-                    }
-
-                }
-               // DB::Commit();
+                $shipment = MShipment::find($id);
+                $shipment->kdunit = $request->kdunit;
+                $shipment->kddriver = $request->kddriver;
+                $shipment->f_operational = '1';
+                $shipment->save();
                 Alert::success('sukses');
-                return redirect()->route('ujo.index');
+                return redirect()->back();
+
+                // return Redirect()
+                //     ->route('shipment.index')
+                //     ->with('success', 'Data Berhasil Disimpan');
             } catch (\Exception $e) {
                 Alert::error('Gagal', $e->getMessage());
                 DB::rollback();
@@ -312,21 +276,20 @@ class UjoController extends Controller
     {
         try {
             DB::beginTransaction();
-            $cek = MInvoice::where('noujo', '=', $id)->count();
+            $cek = MInvoice::where('shipmentid', '=', $id)->count();
             if ($cek > 0) {
                 Alert::error('Gagal hapus, ada  relasi data dengan yang lain (UJO), silahkan batalkan UJO terlebih dahulu');
-                return redirect()->route('ujo.listujo');
+                return redirect()->route('shipment.index');
             } else {
-
-                MDetailujoongoing::where('noujo', '=', $id)->delete();
-                MUjo::where('noujo', '=', $id)->delete();
+                Mdetailshipment::where('shipmentid', '=', $id)->delete();
+                MShipment::where('shipmentid', '=', $id)->delete();
                 DB::commit();
-                Alert::success('delete success');
-                return redirect()->route('ujo.listujo');
+                Alert::success('sukses dihapus');
+                return redirect()->route('shipment.index');
             }
         } catch (QueryException $ex) {
             Alert::error('Gagal hapus, ada relasi data dengan yang lain');
-            return redirect()->route('ujo.listujo');
+            return redirect()->route('shipment.index');
         }
     }
     public function lang($locale)
@@ -408,7 +371,6 @@ class UjoController extends Controller
             'jumlah' => $request->jumlah,
             'pph' => $request->pph,
             'pajak' => $request->pajak,
-            'f_edit'=>'1'
         ]);
 
         return $data = [
@@ -514,8 +476,7 @@ class UjoController extends Controller
 
             // DB::commit();
 
-            return Redirect()
-                ->route('shipment.detail', $shipment->shipmentid)
+            return Redirect()->route('shipment.detail',$shipment->shipmentid)
                 ->with('success', 'Data Berhasil Disimpan');
         }
     }
@@ -551,9 +512,9 @@ class UjoController extends Controller
     }
     public function listpod($id)
     {
-        $shipmentid = $id;
+        $shipmentid=    $id;
         $docpod = MDocpod::where('shipmentid', $id)->get();
-        return view('shipment.listpod', compact('docpod', 'shipmentid'));
+        return view('shipment.listpod', compact('docpod','shipmentid'));
     }
     public function changeroute($id)
     {
