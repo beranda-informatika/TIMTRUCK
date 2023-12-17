@@ -57,6 +57,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\UnitController::class, 'show'])->name('unit.show');
             Route::get('/getunit', [App\Http\Controllers\UnitController::class, 'getunit'])->name('unit.getunit');
         });
+       
         Route::group(['prefix' => 'driver'], function () {
             Route::get('/', [App\Http\Controllers\DriverController::class, 'index'])->name('driver.index');
             Route::get('/create', [App\Http\Controllers\DriverController::class, 'create'])->name('driver.create');
@@ -219,6 +220,19 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/changeroute/{id}', [App\Http\Controllers\ShipmentController::class, 'changeroute'])->name('shipment.changeroute');
             Route::put('/updateroute/{id}', [App\Http\Controllers\ShipmentController::class, 'updateroute'])->name('shipment.updateroute');
 
+        });
+        Route::group(['prefix' => 'ujo'], function () {
+            Route::get('/', [App\Http\Controllers\UjoController::class, 'index'])->name('ujo.index');
+            Route::get('/create', [App\Http\Controllers\UjoController::class, 'create'])->name('ujo.create');
+            Route::post('/store', [App\Http\Controllers\UjoController::class, 'store'])->name('ujo.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\UjoController::class, 'destroy'])->name('ujo.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\UjoController::class, 'edit'])->name('ujo.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\UjoController::class, 'update'])->name('ujo.update');
+            Route::get('/show/{id}', [App\Http\Controllers\UjoController::class, 'show'])->name('ujo.show');
+            Route::get('/getsalesorder', [App\Http\Controllers\UjoController::class, 'getsalesorder'])->name('ujo.getsalesorder');
+            Route::get('/formujo', [App\Http\Controllers\UjoController::class, 'formujo'])->name('ujo.formujo');
+            Route::get('/inrate/{id}', [App\Http\Controllers\UjoController::class, 'inrate'])->name('ujo.inrate');
+            Route::post('/ratestore', [App\Http\Controllers\UjoController::class, 'ratestore'])->name('ujo.ratestore');
         });
         Route::group(['prefix' => 'settlement'], function () {
             Route::get('/', [App\Http\Controllers\SettlementController::class, 'index'])->name('settlement.index');

@@ -37,7 +37,30 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="package"></i>
+                        <span data-key="t-apps">@lang('translation.UJO')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('ujo.create') }}">
+                               Create UJO
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ujo.index') }}">
+                               UJO Ongoing
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('settlement.index') }}">
+                                UJO Settlement
+                            </a>
+                        </li>
 
+                    </ul>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="printer"></i>

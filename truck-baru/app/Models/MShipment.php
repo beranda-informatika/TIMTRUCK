@@ -41,6 +41,9 @@ class MShipment extends Model
     public function getsales(){
         return $this->belongsTo(MSales::class,'kdsales','kdsales');
     }
+    public function getujo(){
+        return $this->belongsTo(MUjo::class,'shipmentid','shipmentid');
+    }
 
     public function getunit(){
         return $this->belongsTo(MUnit::class,'kdunit','kdunit');

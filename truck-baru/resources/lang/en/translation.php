@@ -6,6 +6,7 @@ return [
     "Shipment" => "Shipment",
     "Finance" => "Finance",
     "Operational" => "Operational",
+    "UJO" => "UJO",
     "Quotation" => "Quotation",
     "Sales Order" => "Sales Order",
     "Report" => "Report",
