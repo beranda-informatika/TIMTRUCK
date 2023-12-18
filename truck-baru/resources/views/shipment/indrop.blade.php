@@ -69,13 +69,13 @@
                                     <div class="mb-1">
                                         <label for="example-select" class="form-label">Nominal Drop</label>
                                         <input class="form-control" type="text" name="nominal" id="nominal"
-                                            placeholder="unit mrc" required style="text-transform:uppercase" value="{{ $shipment->ratedrop }}" readonly>
+                                            placeholder="" required style="text-transform:uppercase" value="{{ $shipment->ratedrop }}" >
 
                                     </div>
                                     <div class="mb-1">
                                         <label for="example-text-input" class="form-label">point</label>
                                         <input class="form-control" type="number" name="qty" id="qty"
-                                            placeholder="" required >
+                                            value="{{ $shipment->qtydrop }}" required >
 
                                     </div>
                                     <div class="mb-1">
@@ -112,6 +112,12 @@
         $(document).ready(function() {
             $('#qty').on('input', function() {
                 var qty = $(this).val();
+                var nominal = $('#nominal').val();
+                var total = qty * nominal;
+                $('#total').val(total);
+            });
+            $('#nominal').on('input', function() {
+                var qty = $('#qty').val();
                 var nominal = $('#nominal').val();
                 var total = qty * nominal;
                 $('#total').val(total);

@@ -106,7 +106,7 @@
                 <div class="form-group">
                     <div class="entry input-group">
                         <input class="form-control" name="locationpickup[]" type="text"
-                            placeholder="Drop Location" style="text-transform:uppercase;">
+                            placeholder="Pickup Location" style="text-transform:uppercase;">
                         <span class="input-group-btn">
                             <button class="btn btn-success btn-addpickup" type="button">
                                 +

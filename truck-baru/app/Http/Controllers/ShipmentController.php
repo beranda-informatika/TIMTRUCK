@@ -189,7 +189,7 @@ class ShipmentController extends Controller
             $shipment->ujo = $request->ujo;
             $simpan = $shipment->save();
 
-            if (count($request->locationdrop) > 1) {
+            if (count($request->locationdrop) > 0) {
                 foreach ($request->locationdrop as $key => $value) {
                     MLocationpoint::create([
                         'shipmentid' => $shipment->shipmentid,
@@ -198,8 +198,8 @@ class ShipmentController extends Controller
                     ]);
                 }
             }
-            if (count($request->locationpickup) > 1) {
-                foreach ($request->locationdrop as $key => $value) {
+            if (count($request->locationpickup) > 0) {
+                foreach ($request->locationpickup as $key => $value) {
                     MLocationpoint::create([
                         'shipmentid' => $shipment->shipmentid,
                         'location' => $value,
@@ -511,9 +511,9 @@ class ShipmentController extends Controller
         $shipment = MShipment::find(request('shipmentid'));
         $shipment->mrc = request('mrc');
         $shipment->save();
-        $revenue = MDetailrevenue::where('rateid', '10011')->count();
+        $revenue = MDetailrevenue::where('rateid', '10011')->where('shipmentid', $request->shipmentid)->count();
         if ($revenue>0) {
-            $detailrate = MDetailrevenue::where('rateid', '10011')->first();
+            $detailrate = MDetailrevenue::where('rateid', '10011')->where('shipmentid', $request->shipmentid)->first();
             $detailrate->nominal = request('mrc');
             $detailrate->jumlah = request('mrc');
             $detailrate->save();
@@ -547,9 +547,9 @@ class ShipmentController extends Controller
     }
     public function storedrop(Request $request)
     {
-        $revenue = MDetailrevenue::where('rateid', '10012')->count();
+        $revenue = MDetailrevenue::where('rateid', '10012')->where('shipmentid', $request->shipmentid)->count();
         if ($revenue>0) {
-            $detailrate = MDetailrevenue::where('rateid', '10012')->first();
+            $detailrate = MDetailrevenue::where('rateid', '10012')->where('shipmentid', $request->shipmentid)->first();
             $detailrate->nominal = request('nominal');
             $detailrate->qty = request('qty');
             $detailrate->jumlah = request('total');
@@ -584,9 +584,9 @@ class ShipmentController extends Controller
     }
     public function storepickup(Request $request)
     {
-        $revenue = MDetailrevenue::where('rateid', '10013')->count();
+        $revenue = MDetailrevenue::where('rateid', '10013')->where('shipmentid', $request->shipmentid)->count();
         if ($revenue>0) {
-            $detailrate = MDetailrevenue::where('rateid', '10013')->first();
+            $detailrate = MDetailrevenue::where('rateid', '10013')->where('shipmentid', $request->shipmentid)->first();
             $detailrate->nominal = request('nominal');
             $detailrate->qty = request('qty');
             $detailrate->jumlah = request('total');

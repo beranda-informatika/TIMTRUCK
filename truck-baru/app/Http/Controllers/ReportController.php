@@ -43,8 +43,7 @@ class ReportController extends Controller
     {
         $tglmulai = $request->tglmulai;
         $tglakhir = $request->tglakhir;
-            $shipment = MShipment::with('getdetailshipment')
-                ->whereBetween('tglorder', [$tglmulai, $tglakhir])
+            $shipment = MShipment::whereBetween('tglorder', [$tglmulai, $tglakhir])->where('f_status',"Settlement")
                 ->get();
             return view('reports.shipment')->with(['shipment' => $shipment, 'tglmulai' => $tglmulai, 'tglakhir' => $tglakhir]);
     }
