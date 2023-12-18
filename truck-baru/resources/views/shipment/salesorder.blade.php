@@ -43,9 +43,7 @@
 
                                     <td scope="col">{{ $key->shipmentid }}</td>
                                     <td scope="col">{{ $key->getcustomer->namacustomer }}</td>
-                                    <td scope="col"><span class="badge bg-danger">
-                                            {{ $key->f_status }}
-                                        </span>
+                                    <td scope="col">@include('statusshipment.statusshipment')
 
                                     </td>
 
