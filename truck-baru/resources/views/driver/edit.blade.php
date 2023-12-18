@@ -46,6 +46,18 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-4 col-form-label">Email<span class="text-danger">*</span></label>
+                                    <div class="col-7">
+                                        <input type="email" required parsley-type="text" class="form-control" id="email" name="email" placeholder="email" value="{{ $driver->email }}"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-4 col-form-label">Password<span class="text-danger">*</span></label>
+                                    <div class="col-7">
+                                        <input type="password" required parsley-type="text" class="form-control" id="password" name="password" placeholder="password" value="{{ $driver->password }}"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
                                     <label for="inputEmail3" class="col-4 col-form-label">Bank<span class="text-danger">*</span></label>
                                     <div class="col-7">
                                         <select class="form-control" id="bank" name="bank">

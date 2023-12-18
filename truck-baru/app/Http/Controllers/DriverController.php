@@ -42,10 +42,19 @@ class DriverController extends Controller
             'bank' => 'required',
             'norekening' => 'required',
             'namarekening' => 'required',
+            'email'=>'required|email|unique:users,email',
 
         ]);
+        $user = new \App\Models\User;
+        $user->name = $request->namadriver;
+        $user->email = $request->email;
+        $user->password = bcrypt('12345678');
+        $user->roles_id = '6';
+        $user->save();
+        $userid = $user->id;
 
         $driver = new MDriver;
+        $driver->userid = $userid;
         $driver->kddriver = $request->kddriver;
         $driver->namadriver = $request->namadriver;
         $driver->nohp = $request->nohp;

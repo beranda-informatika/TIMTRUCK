@@ -29,21 +29,34 @@
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-4 col-form-label">Kode driver<span class="text-danger">*</span></label>
                                     <div class="col-7">
-                                        <input type="text" required parsley-type="text" class="form-control" id="kddriver" name="kddriver" placeholder="Kode driver" value=""/>
+                                        <input type="text" required parsley-type="text" class="form-control" id="kddriver" name="kddriver" placeholder="Kode driver" value="{{ old('kddriver') }}"/>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-4 col-form-label">Nama Driver<span class="text-danger">*</span></label>
                                     <div class="col-7">
-                                        <input type="text" required parsley-type="text" class="form-control" id="namadriver" name="namadriver" placeholder="Nama Driver" value=""/>
+                                        <input type="text" required parsley-type="text" class="form-control" id="namadriver" name="namadriver" placeholder="Nama Driver" value="{{ old('namadriver') }}"/>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-4 col-form-label">No HP<span class="text-danger">*</span></label>
                                     <div class="col-7">
-                                        <input type="text" required parsley-type="text" class="form-control" id="nohp" name="nohp" placeholder="No HP" value=""/>
+                                        <input type="text" required parsley-type="text" class="form-control" id="nohp" name="nohp" placeholder="No HP" value="{{ old('nohp') }}"/>
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-4 col-form-label">Email<span class="text-danger">*</span></label>
+                                    <div class="col-7">
+                                        <input type="email" required parsley-type="text" class="form-control" id="email" name="email" placeholder="email" value="{{ old('email') }}"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-4 col-form-label">Password<span class="text-danger">*</span></label>
+                                    <div class="col-7">
+                                        <input type="password" required parsley-type="text" class="form-control" id="password" name="password" placeholder="password" value="{{ old('password') }}"/>
+                                    </div>
+                                </div>
+
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-4 col-form-label">Bank<span class="text-danger">*</span></label>
                                     <div class="col-7">
@@ -59,13 +72,13 @@
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-4 col-form-label">Atas Nama Rekening<span class="text-danger">*</span></label>
                                     <div class="col-7">
-                                        <input type="text" required parsley-type="text" class="form-control" id="namarekening" name="namarekening" placeholder="an Rekening" value=""/>
+                                        <input type="text" required parsley-type="text" class="form-control" id="namarekening" name="namarekening" placeholder="an Rekening" value="{{ old('namarekening') }}"/>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-4 col-form-label">No Rekening<span class="text-danger">*</span></label>
                                     <div class="col-7">
-                                        <input type="text" required parsley-type="text" class="form-control" id="norekening" name="norekening" placeholder="No Rekening" value=""/>
+                                        <input type="text" required parsley-type="text" class="form-control" id="norekening" name="norekening" placeholder="No Rekening" value="{{ old('norekening') }}"/>
                                     </div>
                                 </div>
 
