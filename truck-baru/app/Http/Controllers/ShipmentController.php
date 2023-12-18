@@ -358,17 +358,10 @@ class ShipmentController extends Controller
     {
         try {
             DB::beginTransaction();
-            $cek = MInvoice::where('shipmentid', '=', $id)->count();
-            if ($cek > 0) {
-                Alert::error('Gagal hapus, ada  relasi data dengan yang lain (UJO), silahkan batalkan UJO terlebih dahulu');
-                return redirect()->route('shipment.index');
-            } else {
-                Mdetailshipment::where('shipmentid', '=', $id)->delete();
-                MShipment::where('shipmentid', '=', $id)->delete();
-                DB::commit();
-                Alert::success('sukses dihapus');
-                return redirect()->route('shipment.index');
-            }
+            MShipment::where('shipmentid', '=', $id)->delete();
+            DB::commit();
+            Alert::success('sukses dihapus');
+            return redirect()->route('shipment.index');
         } catch (QueryException $ex) {
             Alert::error('Gagal hapus, ada relasi data dengan yang lain');
             return redirect()->route('shipment.index');
@@ -510,9 +503,13 @@ class ShipmentController extends Controller
         $shipment = MShipment::find(request('shipmentid'));
         $shipment->mrc = request('mrc');
         $shipment->save();
-        $revenue = MDetailrevenue::where('rateid', '10011')->where('shipmentid', $request->shipmentid)->count();
-        if ($revenue>0) {
-            $detailrate = MDetailrevenue::where('rateid', '10011')->where('shipmentid', $request->shipmentid)->first();
+        $revenue = MDetailrevenue::where('rateid', '10011')
+            ->where('shipmentid', $request->shipmentid)
+            ->count();
+        if ($revenue > 0) {
+            $detailrate = MDetailrevenue::where('rateid', '10011')
+                ->where('shipmentid', $request->shipmentid)
+                ->first();
             $detailrate->nominal = request('mrc');
             $detailrate->jumlah = request('mrc');
             $detailrate->save();
@@ -530,7 +527,6 @@ class ShipmentController extends Controller
             ]);
         }
         return redirect()->route('shipment.detail', $request->shipmentid);
-
     }
     public function indrop($id)
     {
@@ -546,9 +542,13 @@ class ShipmentController extends Controller
     }
     public function storedrop(Request $request)
     {
-        $revenue = MDetailrevenue::where('rateid', '10012')->where('shipmentid', $request->shipmentid)->count();
-        if ($revenue>0) {
-            $detailrate = MDetailrevenue::where('rateid', '10012')->where('shipmentid', $request->shipmentid)->first();
+        $revenue = MDetailrevenue::where('rateid', '10012')
+            ->where('shipmentid', $request->shipmentid)
+            ->count();
+        if ($revenue > 0) {
+            $detailrate = MDetailrevenue::where('rateid', '10012')
+                ->where('shipmentid', $request->shipmentid)
+                ->first();
             $detailrate->nominal = request('nominal');
             $detailrate->qty = request('qty');
             $detailrate->jumlah = request('total');
@@ -567,7 +567,6 @@ class ShipmentController extends Controller
             ]);
         }
         return redirect()->route('shipment.detail', $request->shipmentid);
-
     }
     public function inpickup($id)
     {
@@ -583,9 +582,13 @@ class ShipmentController extends Controller
     }
     public function storepickup(Request $request)
     {
-        $revenue = MDetailrevenue::where('rateid', '10013')->where('shipmentid', $request->shipmentid)->count();
-        if ($revenue>0) {
-            $detailrate = MDetailrevenue::where('rateid', '10013')->where('shipmentid', $request->shipmentid)->first();
+        $revenue = MDetailrevenue::where('rateid', '10013')
+            ->where('shipmentid', $request->shipmentid)
+            ->count();
+        if ($revenue > 0) {
+            $detailrate = MDetailrevenue::where('rateid', '10013')
+                ->where('shipmentid', $request->shipmentid)
+                ->first();
             $detailrate->nominal = request('nominal');
             $detailrate->qty = request('qty');
             $detailrate->jumlah = request('total');
@@ -604,7 +607,6 @@ class ShipmentController extends Controller
             ]);
         }
         return redirect()->route('shipment.detail', $request->shipmentid);
-
     }
 
     public function storeujo(Request $request)
