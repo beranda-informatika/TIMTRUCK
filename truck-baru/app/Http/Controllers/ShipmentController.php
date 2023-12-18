@@ -358,12 +358,12 @@ class ShipmentController extends Controller
     {
         try {
             DB::beginTransaction();
-            MShipment::where('shipmentid', '=', $id)->delete();
+            MShipment::where('shipmentid', '=', $id)->update(['f_status'=>'Cancel']);
             DB::commit();
-            Alert::success('sukses dihapus');
+            Alert::success('Reject Success');
             return redirect()->route('shipment.index');
         } catch (QueryException $ex) {
-            Alert::error('Gagal hapus, ada relasi data dengan yang lain');
+            Alert::error('Failed, ada relasi data dengan yang lain');
             return redirect()->route('shipment.index');
         }
     }

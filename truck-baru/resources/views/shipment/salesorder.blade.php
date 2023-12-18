@@ -101,31 +101,33 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('shipment.detail', $key->shipmentid) }}"
-                                            class="btn btn-sm btn-info">Detail</a>
-                                        <div id="kode" style="display: none">{{ $key->shipmentid }}</div>
+                                        @if ($key->f_status != 'Cancel')
+                                            <a href="{{ route('shipment.detail', $key->shipmentid) }}"
+                                                class="btn btn-sm btn-info">Detail</a>
+                                            <div id="kode" style="display: none">{{ $key->shipmentid }}</div>
 
-                                        @if (Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2)
-                                            <form action="{{ route('shipment.destroy', $key->shipmentid) }}"
-                                                method="POST">
+                                            @if (Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2)
+                                                <form action="{{ route('shipment.destroy', $key->shipmentid) }}"
+                                                    method="POST">
 
 
 
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                                    class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
-                                        @endif
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" onclick="return confirm('Hapus Data ini?');"
+                                                        class="btn btn-sm btn-danger">Reject</button>
+                                                </form>
+                                            @endif
 
-                                        @if (Auth::user()->roles_id == 3 && $key->f_status == 'New' && $key->f_operational == 0)
-                                            <form action="{{ route('shipment.destroy', $key->shipmentid) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                                    class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
+                                            @if (Auth::user()->roles_id == 3 && $key->f_status == 'New' && $key->f_operational == 0)
+                                                <form action="{{ route('shipment.destroy', $key->shipmentid) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" onclick="return confirm('Hapus Data ini?');"
+                                                        class="btn btn-sm btn-danger">Reject</button>
+                                                </form>
+                                            @endif
                                         @endif
                                     </td>
 
