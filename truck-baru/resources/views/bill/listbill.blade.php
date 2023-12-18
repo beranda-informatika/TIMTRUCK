@@ -46,14 +46,12 @@
                                 <thead>
                                     <tr>
 
-                                        <th scope="col">No.bill</th>
+                                        <th scope="col">No.Bill</th>
                                         <th scope="col">Shipmentid</th>
-                                        <th scope="col">tgl.bill</th>
-                                        <th scope="col">Tgl.payment</th>
+                                        <th scope="col">Date.Bill</th>
+                                        <th scope="col">Payment Date</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
-
-
 
                                     </tr>
                                 </thead>

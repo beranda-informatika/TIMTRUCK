@@ -20,7 +20,7 @@
                     </p>
                     @if ($errors->any())
                         <div class="alert alert-danger">
-                            <strong>Whoops!</strong> Ada kesalahan input data! <br><br>
+                            <strong>Whoops!</strong> There were some problems with your input. <br><br>
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }} </li>
@@ -86,7 +86,7 @@
 
                                         <tr class="table-danger">
                                             <th scope="col">Rate Id</th>
-                                            <th scope="col">Nama Rate</th>
+                                            <th scope="col">Name Rate</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Nominal</th>
                                         </tr>

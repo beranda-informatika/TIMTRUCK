@@ -12,8 +12,8 @@
             <div class="card">
 
                 <div class="card-body">
-                    <a href="{{ route('driver.index') }}" class="btn btn-primary mb-3">Refresh driver</a>
-                    <a href="{{ route('driver.create') }}" class="btn btn-primary mb-3">Tambah driver</a>
+                    <a href="{{ route('driver.index') }}" class="btn btn-primary mb-3">Refresh Driver</a>
+                    <a href="{{ route('driver.create') }}" class="btn btn-primary mb-3">Add Driver</a>
 
                     <table id="example"
                     class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11"
@@ -21,12 +21,11 @@
                         <thead>
                             <tr>
 
-                                <th scope="col">Kode Driver</th>
-                                <th scope="col">Nama Driver</th>
-                                <th scope="col">NO HP</th>
-                                <th scope="col">Bank</th>
-                                <th scope="col">No Rekening</th>
-
+                                <th scope="col">Code Driver</th>
+                                <th scope="col">Name Driver</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Bank Account</th>
+                                <th scope="col">Number Account</th>
                                 <th scope="col">Action</th>
 
                             </tr>
@@ -49,8 +48,8 @@
                                                 class="btn btn-sm btn-warning">Edit</a>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                                class="btn btn-sm btn-danger">Hapus</button>
+                                            <button type="submit" onclick="return confirm('Are you sure to delete?');"
+                                                class="btn btn-sm btn-danger">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -29,8 +29,6 @@
                                     <th scope="col">Action</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Date Created</th>
-
-
                                     <th scope="col">Action</th>
 
                                 </tr>

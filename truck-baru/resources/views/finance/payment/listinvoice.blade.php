@@ -42,11 +42,11 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">No.Request</th>
-                                            <th scope="col">NO UJO</th>
+                                            <th scope="col">No.UJO</th>
                                             <th scope="col">Date Request</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Nominal</th>
-                                            <th scope="col">Date payment</th>
+                                            <th scope="col">Date Payment</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
 

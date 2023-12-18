@@ -13,7 +13,7 @@
             <div class="card-body">
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        <strong>Whoops!</strong> Ada kesalahan input data! <br><br>
+                        <strong>Whoops!</strong> There were some problems with your input. <br><br>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }} </li>
@@ -24,22 +24,22 @@
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="header-title">customer Form</h4>
+                            <h4 class="header-title">Customer Form</h4>
                             <p class="text-muted font-14">
-                                Form Edit Master customer
+                                Form Edit Master Customer
                             </p>
 
                             <form role="form" class="parsley-examples" action="{{ route('customer.update', $customer->kdcustomer)}}" method="POST">
                                 @method('PUT')
                                 @csrf
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-4 col-form-label">Kode customer<span class="text-danger">*</span></label>
+                                    <label for="inputEmail3" class="col-4 col-form-label">Code Customer<span class="text-danger">*</span></label>
                                     <div class="col-7">
                                         <input type="text" required parsley-type="text" class="form-control" id="kdcustomer" name="kdcustomer" placeholder="Kode customer" value="{{ $customer->kdcustomer }}"/>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-4 col-form-label">Nama customer<span class="text-danger">*</span></label>
+                                    <label for="inputEmail3" class="col-4 col-form-label">Name Customer<span class="text-danger">*</span></label>
                                     <div class="col-7">
                                         <input type="text" required parsley-type="text" class="form-control" id="namacustomer" name="namacustomer" placeholder="Nama customer" value="{{ $customer->namacustomer }}"/>
                                     </div>

@@ -31,21 +31,18 @@
             @endif
             <table class="table table-responsive">
                 <tr>
-                    <td>Filter Pencarian </td>
+                    <td>Search</td>
                     <td>
                         <Select name="kriteria" id="kriteria">
                             <option value="shipmentid">No Shipment</option>
                             <option value="rute">Rute</option>
                             <option value="customer">Customer</option>
                         </Select>
-
-
-
                     </td>
 
                 </tr>
                 <tr>
-                    <td>Kata Kunci</td>
+                    <td>Keywords</td>
                     <td> <input type="text" name="search" id="search" class="form-control"
                             placeholder="KeyWord" /></td>
 

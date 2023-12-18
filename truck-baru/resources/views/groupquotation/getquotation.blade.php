@@ -9,10 +9,9 @@
         <thead class="active">
             <tr>
                 <th>Quotation ID</th>
-                <th>Datecreated</th>
-                <th>Kategori</th>
-
-                <th>action</th>
+                <th>Date Created</th>
+                <th>Category</th>
+                <th>Action</th>
             </tr>
         </thead>
 

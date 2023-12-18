@@ -82,14 +82,14 @@
                 <li>
                     <a href="#operasional" data-bs-toggle="collapse">
                         <i class="mdi mdi-text-box-outline"></i>
-                        <span> Operasional </span>
+                        <span> Operational </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="operasional">
                         <ul class="nav-second-level">
                             <li>
                                 <a href="{{ route('shipment.create') }}">
-                                    Registrasi Shipment
+                                    Shipment Registration
                                 </a>
                             </li>
                             <li>
@@ -104,7 +104,7 @@
                             </li>
                             <li>
                                 <a href="{{ route('shiping.search') }}">
-                                    Shipment Shiping
+                                    Shipment Shipping
                                 </a>
                             </li>
                             <li>
@@ -251,7 +251,7 @@
                     <div class="collapse" id="sidebarAuth">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('utility.gantipassword')}}">Ubah Password</a>
+                                <a href="{{ route('utility.gantipassword')}}">Change Password</a>
                             </li>
                             <li>
                                 <a href="{{ route('utility.userpassword')}}">User</a>

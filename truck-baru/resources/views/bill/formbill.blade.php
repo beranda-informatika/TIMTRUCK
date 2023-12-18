@@ -18,7 +18,7 @@
                 </p>
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        <strong>Whoops!</strong> Ada kesalahan input data! <br><br>
+                        <strong>Whoops!</strong>There were some problems with your input. <br><br>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }} </li>
@@ -39,7 +39,7 @@
                                     readonly style="background: rgb(235, 234, 234)">
                             </div>
                             <div class="mb-3">
-                                <label for="example-select" class="form-label">Pilih Order</label>
+                                <label for="example-select" class="form-label">Choose Order</label>
                                 <select class="form-select" id="orderid" name="orderid" required style="background: rgb(235, 234, 234)">
                                     <option value="{{ $key->orderid }}">{{ $key->getorder->origin }}</option>
 
@@ -69,9 +69,9 @@
 
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label for="example-select" class="form-label">Kategori</label>
+                                <label for="example-select" class="form-label">Category</label>
                                 <select class="form-select" id="kdkategori" name="kdkategori" readonly style="background: rgb(235, 234, 234)">
-                                    <option value="">Pilih Kategori</option>
+                                    <option value="">Choose Category</option>
                                     <option value="{{ $key->getrute->kdkategori }}" selected>{{ $key->getrute->getkategori->namakategori }}</option>
 
                                 </select>
@@ -91,11 +91,11 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="example-textarea" class="form-label">Keterangan</label>
+                                <label for="example-textarea" class="form-label">Description</label>
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="5" required readonly style="background: rgb(235, 234, 234)">{{ $key->keterangan }}</textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="example-select" class="form-label">Rute</label>
+                                <label for="example-select" class="form-label">Route</label>
                                 <select class="form-select" id="routeid" name="routeid" readonly required style="background: rgb(235, 234, 234)">
                                     <option value="{{ $key->routeid }}">{{ $key->getrute->route }}</option>
 
@@ -110,10 +110,10 @@
 
                                     <tr class="table-danger">
                                         <th scope="col">Rate Id</th>
-                                        <th scope="col">Nama Rate</th>
+                                        <th scope="col">Name Rate</th>
                                         <th scope="col">Nominal</th>
                                         <th scope="col">Qty</th>
-                                        <th scope="col">Jumlah</th>
+                                        <th scope="col">Amount</th>
 
 
                                     </tr>

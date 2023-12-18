@@ -13,7 +13,7 @@
             <div class="card">
 
                 <div class="card-body">
-                    <a href="{{ route('shipment.index') }}" class="btn btn-primary mb-3">Refresh shipment</a>
+                    <a href="{{ route('shipment.index') }}" class="btn btn-primary mb-3">Refresh Shipment</a>
                     <div class="table-responsive">
                         <table id="example"
                             class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11"
@@ -22,12 +22,12 @@
                             <thead>
                                 <tr>
 
-                                    <th scope="col">shipment ID</th>
+                                    <th scope="col">Shipment ID</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                     <th scope="col">Quotation ID</th>
-                                    <th scope="col">Kategori</th>
-                                    <th scope="col">Tgl Request</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Request Date</th>
                                     <th scope="col">Origin</th>
                                     <th scope="col">Destination</th>
                                     <th scope="col">MRC</th>
@@ -38,8 +38,6 @@
                                     <th scope="col">Unit</th>
                                     <th scope="col">Type Truck</th>
                                     <th scope="col">Driver</th>
-
-
 
                                 </tr>
                             </thead>

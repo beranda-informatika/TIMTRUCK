@@ -41,7 +41,7 @@
                                     <p>
                                         <strong>Quotation Date: </strong> {{ date_format(date_create($itemgroupquotation->datecreated),'d/M/Y') }}<br>
 
-                                            <strong>Kategori : </strong>
+                                            <strong>Category : </strong>
                                             {{ $itemgroupquotation->getkategori->namakategori }}<br>
                                             <strong>Customer : </strong> {{ $itemgroupquotation->getcustomer->namacustomer }}<br>
 

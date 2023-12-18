@@ -14,7 +14,7 @@
                 <th scope="col">Destination</th>
                 <th scope="col">Type Truck</th>
                 <th scope="col">MRC</th>
-                <th>action</th>
+                <th>Action</th>
             </tr>
         </thead>
 

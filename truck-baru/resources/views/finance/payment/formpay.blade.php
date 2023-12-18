@@ -31,7 +31,7 @@
                                             <strong>Driver : </strong> {{ $item->getujo->getshipment->getdriver->namadriver }}
                                         </p>
                                         <address>
-                                            <strong>Keterangan :</strong><br>
+                                            <strong>Description :</strong><br>
                                             {{ $item->keterangan }}<br>
 
                                         </address>
@@ -78,17 +78,17 @@
                                         </div>
 
                                     <div class="form-group">
-                                        <label>BANK</label>
+                                        <label>Bank Account</label>
                                         <input type="text" name="bank" class="form-control"
                                            value="{{ $item->getujo->getshipment->getdriver->bank }}" required readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label>Nama Rekening</label>
+                                        <label>Account Name</label>
                                         <input type="text" name="namarekening" class="form-control"
                                            value="{{ $item->getujo->getshipment->getdriver->namarekening }}" required readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label>No. Rekening </label>
+                                        <label>Number Account </label>
                                         <input type="text" name="norekening" class="form-control"
                                         value="{{ $item->getujo->getshipment->getdriver->norekening }}" required readonly>
                                     </div>

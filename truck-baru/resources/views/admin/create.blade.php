@@ -59,9 +59,9 @@
                                             <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="password" value="{{ old('password') }}" required="">
                                         </div>                                 
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                         <a href="{{ route('admin.index') }}">
-                                            <div class="btn btn-primary">Kembali</div>
+                                            <div class="btn btn-primary">Back</div>
                                         </a>
 
                                     </form>

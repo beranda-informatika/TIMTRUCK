@@ -48,7 +48,7 @@
 
                             @if ($errors->any())
                                 <div class="alert alert-danger">
-                                    <strong>Whoops!</strong> Ada kesalahan data, silahkan dicek kembali<br><br>
+                                    <strong>Whoops!</strong> There's wrong, please check!<br><br>
                                     <ul>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
@@ -81,7 +81,7 @@
 
                                     </div>
                                     <div class="mb-3">
-                                        <label for="example-select" class="form-label">Kategori</label>
+                                        <label for="example-select" class="form-label">Category</label>
                                         <select class="form-select" id="kdkategori" name="kdkategori" required>
                                             <option value="{{ $groupquotation->kdkategori }}">
                                                 {{ $groupquotation->getkategori->namakategori }}</option>
@@ -144,10 +144,10 @@
                     success: function(response) {
                         if (response.status == 1) // return trmahasiswa dari hasil proses
                         {
-                            alert('Data berhasil disimpan');
+                            alert('Data saved successfully.');
                             $('#myModal').modal('hide');
                         } else {
-                            alert('Data gagal disimpan');
+                            alert('Data failed to be saved.');
                             $('#myModal').modal('hide');
 
                         }
@@ -167,10 +167,10 @@
                     success: function(response) {
                         if (response.status == 1) // return trmahasiswa dari hasil proses
                         {
-                            alert('Data berhasil disimpan');
+                            alert('Data saved successfully.');
                             $('#myModal').modal('hide');
                         } else {
-                            alert('Data gagal disimpan');
+                            alert('Data failed to be saved.');
                             $('#myModal').modal('hide');
 
                         }

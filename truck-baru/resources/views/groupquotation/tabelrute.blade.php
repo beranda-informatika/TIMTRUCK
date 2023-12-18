@@ -32,7 +32,7 @@
 
                     </div>
                     <div class="mb-3">
-                        <label for="example-select" class="form-label">Kategori</label>
+                        <label for="example-select" class="form-label">Category</label>
                         <input class="form-control" type="text" name="kdkategori" id="kdkategori"
                             value="{{ $groupquotation->getkategori->namakategori }}" readonly>
                     </div>
@@ -78,7 +78,6 @@
 
                         <th scope="col">No</th>
                         <th scope="col">Status</th>
-
                         <th scope="col">Origin</th>
                         <th scope="col">Destination</th>
                         <th scope="col">Type Truck</th>
@@ -87,8 +86,6 @@
                         <th scope="col">UJO</th>
                         <th scope="col">Profit/Margin</th>
                         <th scope="col">Schema UJO</th>
-
-
                         <th scope="col">Action</th>
 
                     </tr>
@@ -106,7 +103,7 @@
                                     <span class="badge bg-info">Acc Quotation</span>
                                 @endif
                                 @if ($key->f_request == 1)
-                                    <span class="badge bg-dark">on request</span>
+                                    <span class="badge bg-dark">On request</span>
                                 @endif
 
 
@@ -171,8 +168,8 @@
                                         <a href="{{ route('quotation.edit', $key->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
                                         @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                            class="btn btn-sm btn-danger">Hapus</button>
+                                        <button type="submit" onclick="return confirm('Are you sure to delete?');"
+                                            class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 @endif
                                 @if (Auth::user()->roles_id == '3')
@@ -184,8 +181,8 @@
 
 
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                                class="btn btn-sm btn-danger">Hapus</button>
+                                            <button type="submit" onclick="return confirm('Are you sure to delete?');"
+                                                class="btn btn-sm btn-danger">Delete</button>
                                         </form>
                                     @endif
                                 @endif

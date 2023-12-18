@@ -46,13 +46,9 @@
                                             <th scope="col">SO ID</th>
                                             <th scope="col">Date Payment</th>
                                             <th scope="col">Amount</th>
-                                            <th scope="col">BANK</th>
-                                            <th scope="col">Nama Rekening</th>
-                                            <th scope="col">No Rekening</th>
-
-
-
-
+                                            <th scope="col">Bank Account</th>
+                                            <th scope="col">Account Name</th>
+                                            <th scope="col">Number Account</th>
                                         </tr>
                                     </thead>
                                     <tbody>

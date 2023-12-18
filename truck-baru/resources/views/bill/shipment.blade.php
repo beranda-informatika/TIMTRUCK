@@ -10,10 +10,8 @@
             <th scope="col">Sales</th>
             <th scope="col">Driver</th>
             <th scope="col">Unit</th>
-
             <th scope="col">Tgl.Quotation</th>
             <th scope="col">Status</th>
-
             <th scope="col">Action</th>
 
         </tr>

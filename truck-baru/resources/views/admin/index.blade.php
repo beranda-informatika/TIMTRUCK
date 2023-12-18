@@ -17,10 +17,10 @@
                     <div class="col-12">
 
                         <a href="{{ route('admin.index') }}">
-                            <div id="viewData" class="btn btn-info">Daftar Admin</div>
+                            <div id="viewData" class="btn btn-info">Admin List</div>
                         </a>
                         <a href="{{ route('admin.create') }}">
-                            <div id="viewData" class="btn btn-info">Tambah admin</div>
+                            <div id="viewData" class="btn btn-info">Add Admin</div>
                         </a>
                         <br>
                         <br>
@@ -29,13 +29,13 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Kode
+                                        Code
                                     </th>
                                     <th>
                                         Name 
                                     </th>
                                     <th>
-                                        email 
+                                        E-mail 
                                     </th>
                                     
 

@@ -48,14 +48,14 @@
 
                                     </address>
                                     <address>
-                                        <strong>Keterangan :</strong><br>
+                                        <strong>Description :</strong><br>
                                         {{ $item->keterangan }}<br>
 
                                     </address>
                                 </div>
                                 <div class="float-end mt-3">
                                     <p>
-                                        <strong>Kategori : </strong> {{ $item->getshipment->getrute->getkategori->namakategori }}<br>
+                                        <strong>Description : </strong> {{ $item->getshipment->getrute->getkategori->namakategori }}<br>
                                         <strong>Customer : </strong> {{ $item->getshipment->getcustomer->namacustomer }}<br>
                                         <strong>Project : </strong> {{ $item->getshipment->getrute->getproject->namaproject }}<br>
                                         <strong>Driver: </strong> <span
@@ -96,12 +96,12 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th scope="col">Akun</th>
+                                                <th scope="col">Acccount</th>
                                                 <th scope="col">Rate Id</th>
-                                                <th scope="col">Nama Rate</th>
+                                                <th scope="col">Name Rate</th>
                                                 <th scope="col">Nominal</th>
                                                 <th scope="col">Qty</th>
-                                                <th scope="col">Jumlah</th>
+                                                <th scope="col">Amount</th>
                                                 <th scope="col">pph (%)</th>
                                                 <th scope="col">Amount PPh</th>
 

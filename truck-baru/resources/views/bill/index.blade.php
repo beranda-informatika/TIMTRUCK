@@ -38,10 +38,8 @@
                                         <th scope="col">Driver</th>
                                         <th scope="col">Unit</th>
                                         <th scope="col">Invoice</th>
-                                        <th scope="col">Tgl.Approve</th>
+                                        <th scope="col">Date of Approval</th>
                                         <th scope="col">Status</th>
-
-
 
                                     </tr>
                                 </thead>

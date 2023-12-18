@@ -68,7 +68,6 @@
                                             <th scope="col">Type Truck</th>
                                             <th scope="col">Type Route</th>
                                             <th scope="col" style="text-align: right;">MRC</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>

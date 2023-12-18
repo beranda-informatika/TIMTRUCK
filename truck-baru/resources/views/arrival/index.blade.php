@@ -55,10 +55,8 @@
                                         <th scope="col">Sales</th>
                                         <th scope="col">Driver</th>
                                         <th scope="col">Unit</th>
-
-                                        <th scope="col">Tgl.Quotation</th>
+                                        <th scope="col">Date Quotation</th>
                                         <th scope="col">Status</th>
-
                                         <th scope="col">Action</th>
 
                                     </tr>
@@ -102,7 +100,7 @@
 
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('Hapus Data ini?');"
+                                                    <button type="submit" onclick="return confirm('Delete this data?');"
                                                         class="btn btn-sm btn-danger">Del</button>
                                                 </form>
                                             </td>

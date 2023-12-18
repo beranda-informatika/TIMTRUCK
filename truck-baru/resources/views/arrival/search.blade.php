@@ -35,7 +35,7 @@
                     <td>
                         <Select name="kriteria" id="kriteria">
                             <option value="shipmentid">No Shipment</option>
-                            <option value="rute">Rute</option>
+                            <option value="rute">Route</option>
                             <option value="customer">Customer</option>
                         </Select>
 
@@ -45,7 +45,7 @@
 
                 </tr>
                 <tr>
-                    <td>Kata Kunci</td>
+                    <td>Keywords</td>
                     <td> <input type="text" name="search" id="search" class="form-control"
                             placeholder="KeyWord" /></td>
 
