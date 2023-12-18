@@ -22,7 +22,7 @@
 
                 <a href="{{ route('shipment.listpod', $shipment->shipmentid) }}" class="btn btn-sm btn-info">DOC
                     POD LOADING</a><br>
-                @if ($shipment->f_status == 'New' && $shipment->f_status == 'Loading')
+                @if ($shipment->f_status == 'New' || $shipment->f_status == 'Loading')
                     <a href="{{ route('shipment.changeroute', $shipment->shipmentid) }}" class="btn btn-sm btn-danger">Change
                         Route</a><br>
                 @endif
