@@ -188,8 +188,7 @@ class ShipmentController extends Controller
             $shipment->mrc = $request->mrc;
             $shipment->ujo = $request->ujo;
             $simpan = $shipment->save();
-
-            if (count($request->locationdrop) > 0) {
+            if (count($request->locationdrop) > 0 && $request->locationdrop[0] != null) {
                 foreach ($request->locationdrop as $key => $value) {
                     MLocationpoint::create([
                         'shipmentid' => $shipment->shipmentid,
@@ -198,7 +197,7 @@ class ShipmentController extends Controller
                     ]);
                 }
             }
-            if (count($request->locationpickup) > 0) {
+            if (count($request->locationpickup) > 0 && $request->locationdrop[0] != null) {
                 foreach ($request->locationpickup as $key => $value) {
                     MLocationpoint::create([
                         'shipmentid' => $shipment->shipmentid,
