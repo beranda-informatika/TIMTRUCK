@@ -7,9 +7,7 @@
 @elseif($key->f_status == 'Shiping')
 <span class="badge bg-info">{{ $key->f_status }}</span>
 @elseif($key->f_status == 'Settlement')
-<span class="badge bg-danger">{{ $key->f_status }}</span>
+<span class="badge bg-primary">{{ $key->f_status }}</span>
 @elseif($key->f_status == 'Cancel')
-<span class="badge bg-secondary">{{ $key->f_status }}</span>
-@elseif($key->f_status == 'Done')
 <span class="badge bg-secondary">{{ $key->f_status }}</span>
 @endif
