@@ -27,7 +27,7 @@
                                     <th scope="col">Customer</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
-                                    <th scope="col">Kategori</th>
+                                    <th scope="col">Category</th>
                                     <th scope="col">Date Created</th>
 
 
@@ -102,7 +102,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                                        class="btn btn-sm btn-danger">Hapus</button>
+                                                        class="btn btn-sm btn-danger">Delete</button>
                                                 </form>
                                             @endif
                                             @if (Auth::user()->roles_id == '3' && $key->f_accso == 0)
@@ -116,7 +116,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" onclick="return confirm('Hapus Data ini?');"
-                                                        class="btn btn-sm btn-danger">Hapus</button>
+                                                        class="btn btn-sm btn-danger">Delete</button>
                                                 </form>
                                             @endif
 
